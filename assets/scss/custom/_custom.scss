@@ -1,0 +1,887 @@
+// =============================================================================
+// Custom theme overrides
+// =============================================================================
+//
+// Picklist table (PDP) - rendered by assets/js/theme/common/picklist.js
+//
+
+.picklist {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    background: #fff;
+}
+
+.picklist-loading {
+    font-size: 0.95rem;
+}
+
+.picklist-error {
+    display: none;
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid rgba(176, 0, 32, 0.35);
+    background: rgba(176, 0, 32, 0.06);
+    color: #b00020;
+    border-radius: 4px;
+}
+
+.picklistTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.75rem;
+
+    thead th {
+        text-align: left;
+        font-weight: 600;
+        padding: 0.75rem 0.5rem;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+        white-space: nowrap;
+    }
+
+    tbody td {
+        padding: 0.75rem 0.5rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        vertical-align: top;
+    }
+}
+
+.picklistTable-price {
+    white-space: nowrap;
+}
+
+.picklistTable-qty {
+    width: 1%;
+    white-space: nowrap;
+
+    .form-increment {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+
+        .button--icon {
+            min-width: 2.25rem;
+            height: 2.25rem;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .form-input--incrementTotal {
+            width: 3.5rem;
+            text-align: center;
+        }
+    }
+}
+
+.picklistTable-oos {
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.picklist-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+.picklistTable tbody td {
+    vertical-align: top;
+}
+
+// =============================================================================
+// Account Downloads Page
+// =============================================================================
+
+.account-downloads-container {
+    position: relative;
+}
+
+.downloads-loadingOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-content {
+        text-align: center;
+        padding: 2rem;
+        background: transparent;
+        border-radius: 4px;
+    }
+}
+
+.downloads-loadingIndicator {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border-top-color: #ffffff;
+    animation: downloads-spin 1s ease-in-out infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes downloads-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// Table format for downloads
+.downloads-table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 1.5rem;
+}
+
+.downloads-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background-color: rgba(0, 0, 0, 0.55);
+    border-radius: 6px;
+    overflow: hidden;
+
+    th {
+        text-align: left;
+        font-weight: 700;
+        padding: 1rem;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        background: rgba(0, 0, 0, 0.4);
+        color: #ffffff;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+    }
+
+    td {
+        padding: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        vertical-align: middle;
+        color: #ffffff;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tr:hover td {
+        background: rgba(255, 255, 255, 0.07);
+    }
+}
+
+.downloads-table-cell {
+    color: #ffffff;
+
+    a.download-link {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: #D4BA75;
+            text-decoration: underline;
+        }
+    }
+}
+
+.downloads-pagination {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.pagination {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pagination-item {
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.35);
+
+    &:hover:not(.pagination-item--current):not(.pagination-item--ellipsis):not(
+            .pagination-item--disabled
+        ) {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.7);
+        cursor: pointer;
+    }
+
+    &--current {
+        background: rgba(255, 255, 255, 0.25);
+        color: #ffffff;
+        border-color: #ffffff;
+        font-weight: 700;
+    }
+
+    &--ellipsis {
+        border: none;
+        padding: 0.5rem 0;
+        color: rgba(255, 255, 255, 0.6);
+        background: transparent;
+    }
+
+    &--disabled {
+        background: rgba(0, 0, 0, 0.2);
+        color: rgba(255, 255, 255, 0.35);
+        border-color: rgba(255, 255, 255, 0.15);
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    &--previous,
+    &--next {
+        font-weight: 600;
+    }
+}
+
+.pagination-info {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+// Downloads page instruction text
+.downloads-instructions {
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    background-color: rgba(0, 0, 0, 0.45);
+    border-left: 4px solid #D4BA75;
+    font-size: 14px;
+    color: #ffffff !important;
+    border-radius: 0 4px 4px 0;
+
+    strong {
+        color: #ffffff !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .downloads-table {
+        font-size: 0.85rem;
+
+        th,
+        td {
+            padding: 0.75rem 0.5rem;
+        }
+    }
+}
+
+@media (max-width: 550px) {
+    .picklistTable {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .picklist-actions {
+        justify-content: stretch;
+
+        .button {
+            width: 100%;
+        }
+    }
+
+    .account-downloads-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .account-downloads-itemActions {
+        width: 100%;
+        margin-left: 0;
+
+        .button {
+            width: 100%;
+        }
+    }
+}
+
+// =============================================================================
+// Header Visual Fixes
+// =============================================================================
+
+// Fix: Add white background to header to prevent body background image from showing through
+.header {
+    background-color: #ffffff;
+}
+
+// =============================================================================
+// Marketing Banner Styles
+// =============================================================================
+
+.banners {
+    background-color: #D4BA75;
+    color: #ffffff;
+    font-size: 16px;
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        line-height: 1.5;
+        color: #ffffff;
+    }
+
+    @media (max-width: 800px) {
+        font-size: 14px !important;
+        padding: 5px !important;
+        
+        p, h1, h2, h3, h4, h5, h6, span, div {
+            font-size: 14px !important;
+            line-height: 1.2 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    }
+
+    a {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+}
+
+// =============================================================================
+// Header Adjustments
+// =============================================================================
+
+.header {
+    .container {
+        margin-top: 0; /* Keeps the gap closed */
+        padding-top: 15px; /* Adds internal space on top */
+        padding-bottom: 15px; /* Adds equal internal space on bottom */
+    }
+}
+
+// Make the logo larger on mobile devices
+@media (max-width: 800px) {
+    .header-logo-image {
+        max-height: 55px !important; // Forces the image to be larger
+        height: 55px !important; // explicitly define height
+        width: auto !important; // maintain aspect ratio
+    }
+    
+    // Target the shogun element explicitly
+    div[class*="sd-simple-text"] p, 
+    div[class*="sd-simple-text"] span, 
+    div[class*="sd-simple-text"] {
+        font-size: 14px !important;
+        line-height: 1.2 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    // Hide the category side navigation on mobile
+    #faceted-search-container,
+    .page-sidebar {
+        display: none !important;
+    }
+
+    // Fix the gray bar on mobile 
+    .navPages-wrap {
+        background: transparent !important;
+        height: 0 !important;
+        overflow: visible !important;
+    }
+
+    // Show sky background above banner, matching space below it
+    .heroCarousel {
+        margin-top: 60px !important;
+    }
+    
+    // Hide slick dots and arrows before slick is initialized to avoid glitch
+    .heroCarousel:not(.slick-initialized) {
+        .slick-next, .slick-prev, .slick-dots {
+            display: none !important;
+        }
+    }
+
+    // Force aspect ratio so the banner doesn't jump and cause empty space arrows
+    .heroCarousel-image-wrapper {
+        aspect-ratio: 2.5 / 1 !important;
+        height: auto !important;
+        max-height: none !important;
+    }
+}
+
+// =============================================================================
+// Pagination Fixes
+// =============================================================================
+
+.pagination-item--current {
+    .pagination-link {
+        color: #333333 !important;
+    }
+}
+
+// =============================================================================
+// Account Page Visibility Improvements
+// =============================================================================
+
+// 1. Make Account Navigation Tabs more visible on dark blue background
+.navBar--account {
+    background-color: rgba(0, 0, 0, 0.45);
+    padding: 0 spacing("single");
+
+    .navBar-action {
+        font-weight: 700;
+        color: #ffffff;
+        text-transform: uppercase;
+        font-size: 0.95rem;
+        opacity: 0.85;
+
+        &:hover {
+            opacity: 1;
+            color: #ffffff;
+        }
+    }
+
+    .navBar-item.is-active .navBar-action {
+        color: #ffffff;
+        opacity: 1;
+        border-bottom: 2px solid #ffffff;
+    }
+}
+
+// 2. Make Breadcrumbs bigger, darker, and bold
+.breadcrumbs {
+    .breadcrumb-label {
+        font-size: 1.1rem; // Bigger
+        font-weight: 700; // Bold
+        color: #222222; // Darker (almost black)
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); // Subtle shadow for readability against bg
+        opacity: 1;
+    }
+
+    .breadcrumb.is-active .breadcrumb-label {
+        color: #000000; // Active item is pitch black
+    }
+}
+
+// 3. Make Order Status "Completed" etc. more visible
+.account-orderStatus-label {
+    background-color: #555555; // Dark grey background
+    color: #ffffff; // White text
+    padding: 0.35rem 0.75rem; // Add some padding
+    border-radius: 4px; // Rounded corners
+    font-weight: 700; // Bold
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+// =============================================================================
+// Hide Hover Actions (Quick View / Choose Options) on specific sections
+// =============================================================================
+
+[data-list-name="New Products"],
+[data-list-name="Most Popular Products"] {
+    .card-figcaption {
+        display: none !important;
+    }
+}
+
+// =============================================================================
+// Microapps Product Set Carousel Overrides (Most Popular)
+// =============================================================================
+
+.sd-product-set__arrow--left,
+.sd-product-set__arrow--right {
+    background-color: rgba(
+        stencilColor("carousel-arrow-bgColor"),
+        0.9
+    ) !important;
+    border: 1px solid stencilColor("carousel-arrow-borderColor") !important;
+
+    svg {
+        path {
+            fill: stencilColor("carousel-arrow-color") !important;
+        }
+    }
+
+    &:hover {
+        background-color: rgba(
+            stencilColor("carousel-arrow-bgColor"),
+            0.9
+        ) !important;
+
+        svg {
+            path {
+                fill: stencilColor("carousel-arrow-color--hover") !important;
+            }
+        }
+    }
+}
+
+.sidebarBlock-image {
+    overflow: hidden;
+    margin: 0 -1px -1px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.sidebarBlock-image img {
+    mix-blend-mode: multiply;
+    display: block;
+    width: calc(100% + 6px);
+    margin-right: -6px;
+}
+
+html, body {
+    // background-color: #1a6899;
+}
+
+// =============================================================================
+// Account & Login Pages — Text Visibility on Dark Background
+// Only targets .body content area — header and footer are excluded
+// =============================================================================
+
+@mixin dark-bg-page-content {
+    // Scope all fixes inside .body to avoid touching header/footer/nav
+    .body {
+        // Headings
+        h1, h2, h3, h4, h5, h6,
+        .page-heading,
+        .account-heading {
+            color: #ffffff !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        // Breadcrumbs
+        .breadcrumbs a,
+        .breadcrumb-label,
+        .breadcrumb {
+            color: #ffffff !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .breadcrumbs .breadcrumb.is-active .breadcrumb-label {
+            color: rgba(255, 255, 255, 0.75) !important;
+        }
+
+        // Body text, spans & definition lists
+        p, span, dt, dd, dl {
+            color: #ffffff !important;
+        }
+
+        li {
+            color: #ffffff !important;
+        }
+
+        // Panel (New Customer box etc.) — keep dark text on light bg
+        .panel,
+        .panel * {
+            color: #333333 !important;
+            text-shadow: none !important;
+        }
+
+        // But buttons inside panels keep their own text color (white on dark btn)
+        .panel .button,
+        .panel button,
+        .panel [type="submit"] {
+            color: #ffffff !important;
+        }
+
+        // Sidebar buttons (like Print Invoice)
+        .account-sidebar-block .button,
+        [data-print-invoice] {
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.7) !important;
+            border-width: 1px !important;
+            background-color: transparent !important;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1) !important;
+                color: #ffffff !important;
+            }
+        }
+
+        // Labels (ORDER PLACED, LAST UPDATE etc.)
+        .account-product-detail-heading {
+            color: rgba(255, 255, 255, 0.65) !important;
+        }
+
+        // Links inside content
+        a {
+            color: #ffffff !important;
+
+            &:hover {
+                color: rgba(255, 255, 255, 0.8) !important;
+            }
+        }
+
+        // Pagination — fix layout and colors
+        .pagination-list--small {
+            // Override the absolute positioning that causes Next to overlap page numbers
+            .pagination-item--next,
+            .pagination-item--previous {
+                position: static !important;
+                float: none !important;
+            }
+        }
+
+        .pagination-item {
+            // Keep original borders so it looks like a button
+            // border: none !important;
+        }
+
+        .pagination-link {
+            color: #ffffff !important;
+            // border: none !important;
+
+            &:hover {
+                color: #ffffff !important;
+                background-color: transparent !important;
+            }
+        }
+
+        .pagination-item--current {
+            .pagination-link {
+                color: #333333 !important;
+                font-weight: bold;
+                text-decoration: none;
+            }
+        }
+
+        // List item dividers
+        .account-listItem {
+            border-bottom-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        // Form labels
+        .form-label,
+        label {
+            color: #ffffff !important;
+
+            small {
+                color: #D4BA75 !important;
+                font-weight: 600 !important;
+                opacity: 1 !important;
+            }
+        }
+
+        // Forgot password / secondary links
+        .account-forgotPassword,
+        a[href*="forgotten"] {
+            color: rgba(255, 255, 255, 0.85) !important;
+        }
+
+        // Address book — Delete button visible on light panel bg
+        .panel .button.secondary,
+        .panel button.secondary {
+            color: #333333 !important;
+            border-color: #555555 !important;
+            border-width: 2px !important;
+        }
+
+        // Address book — New Address card visible on dark/cloud bg
+        .panel--newAddress {
+            color: #ffffff !important;
+            border: 2px solid rgba(255, 255, 255, 0.6) !important;
+            background-color: rgba(0, 0, 0, 0.35) !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+
+            // Remove inner panel-body border to avoid double lines
+            .panel-body {
+                border: none !important;
+            }
+
+            * {
+                color: #ffffff !important;
+            }
+
+            svg, .icon {
+                fill: #ffffff !important;
+                stroke: #ffffff !important;
+            }
+        }
+    }
+}
+
+// Apply to all account page types
+body[class*="page-type_account"],
+body.page-type_editaccount {
+    @include dark-bg-page-content;
+}
+
+// Apply to wishlists page
+body.page-type_wishlists {
+    @include dark-bg-page-content;
+
+    .body {
+        // Table header — dark overlay so text is readable
+        .table-thead,
+        thead {
+            background-color: rgba(0, 0, 0, 0.4) !important;
+        }
+
+        table th,
+        table td {
+            color: #ffffff !important;
+        }
+
+        // Table row borders
+        table tr {
+            border-bottom-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        // All outlined buttons (Edit, Delete, Delete All)
+        .button.secondary,
+        .button.button--small,
+        input[type="submit"].button {
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.7) !important;
+            border-width: 1px !important;
+            background-color: transparent !important;
+        }
+    }
+}
+
+// Apply to account details/edit page
+body.page-type_editaccount {
+    .body .page-bg {
+        filter: brightness(0.55);
+    }
+}
+
+// Apply to login page
+body.page-type_login {
+    @include dark-bg-page-content;
+
+    // Darken the bright sky/cloud background image
+    .body .page-bg {
+        filter: brightness(0.55);
+    }
+}
+
+// Darken background on account + wishlist + login pages (same sky image)
+body[class*="page-type_account"],
+body.page-type_editaccount,
+body.page-type_wishlists {
+    .body .page-bg {
+        filter: brightness(0.55);
+    }
+}
+
+// =============================================================================
+// Fix: Remove injected margin-top from widget region containers and footer
+// =============================================================================
+
+.container:has([data-content-region="page_bottom"]),
+.container:has([data-content-region="newsletter_above--global"]),
+.container:has([data-content-region="footer_above--global"]) {
+    margin-top: 0 !important;
+}
+
+[data-content-region="header_bottom--global"],
+[data-content-region="header_bottom"] {
+    margin-top: 0 !important;
+}
+
+.footer {
+    margin-top: 0 !important;
+}
+
+// =============================================================================
+// Search page — text visibility on sky background
+// =============================================================================
+
+// =============================================================================
+// Create Account & Cart pages — text visibility on sky background
+// =============================================================================
+
+body.page-type_createaccount,
+body.page-type_cart {
+    .body .page-bg {
+        filter: brightness(0.55);
+    }
+
+    .page-heading,
+    .breadcrumb,
+    .breadcrumb a,
+    .breadcrumb-item,
+    .cart-empty,
+    .page-content p,
+    .page-content h3,
+    .account-body .form-label,
+    .form-label {
+        color: #ffffff !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .form-input,
+    .form-select {
+        color: #333333 !important;
+        background-color: #ffffff !important;
+    }
+}
+
+// =============================================================================
+// Search page — text visibility on sky background
+// =============================================================================
+
+body.page-type_search {
+    // Card text area (title + price) gets a solid white background
+    .card-body {
+        background-color: #ffffff;
+        padding: 0.75rem;
+    }
+
+    // Page heading & breadcrumb — white text with shadow for readability
+    .page-heading,
+    .breadcrumb,
+    .breadcrumb a,
+    .breadcrumb-item {
+        color: #ffffff !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    // Sort bar
+    .actionBar,
+    .actionBar-section {
+        color: #ffffff !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .actionBar .form-label {
+        color: #333333 !important;
+        text-shadow: none !important;
+    }
+
+    .actionBar .form-select {
+        color: #333333 !important;
+        background-color: #ffffff !important;
+        text-shadow: none !important;
+    }
+}
+
+// =============================================================================
+// Main Container Spacing
+// =============================================================================
+
+.body > .container {
+    margin-top: 50px;
+}

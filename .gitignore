@@ -1,0 +1,26 @@
+# Agent configuration (keep local only)
+.claude/
+.agent/
+.gemini/
+tmpclaude-*
+
+# Node modules
+node_modules/
+
+# Build outputs
+assets/dist/
+parsed/
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+*.zip

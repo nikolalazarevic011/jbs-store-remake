@@ -1,0 +1,7 @@
+stencil.conf.cjs
+config.stencil.json
+secrets.stencil.json
+.stencil
+*.zip
+node_modules
+assets/dist/report.html

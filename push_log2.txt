@@ -1,0 +1,73 @@
+Validating theme...
+[33mWarning: Your theme has some missing translations used in the theme:[39m
+[33mMissing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\da.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\de.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\es-AR.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\es-CL.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\es-CO.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\es-419.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\es-LA.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\es-MX.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\es-PE.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\es.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\fr.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\it.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\ja.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\nl.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\no.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\pl.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\pt-BR.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\pt.json
+Missing translation for account.downloads.heading in C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\lang\sv.json[39m
+SCSS Parsing Started...
+Template Parsing Started...
+Language Files Parsing Started...
+Building Theme Schema File...
+Schema Translations Parsing Started...
+Stencil Context Analysis Started...
+Theme task Started...
+[32mok[39m -- Schema Translations Parsing Finished
+[32mok[39m -- Language Files Parsing Finished
+[32mok[39m -- Theme Schema Building Finished
+[32mok[39m -- SCSS Parsing Finished
+[32mok[39m -- Stencil Context Analysis Finished
+[32mok[39m -- Template Parsing Finished
+`isModuleDeclaration` has been deprecated, please migrate to `isImportOrExportDeclaration`
+    at isModuleDeclaration (C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\node_modules\@babel\types\lib\validators\generated\index.js:2793:35)
+    at PluginPass.Program (C:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\node_modules\babel-plugin-lodash\lib\index.js:102:44)
+[1mWebpack Bundle Analyzer[22m saved report to [1mC:\Users\NLazarevic\ME\New bwm store\NEW Caping and Outdoors theme\assets\dist\report.html[22m
+[1m[33mWARNING[39m[22m in [1masset size limit: The following asset(s) exceed the recommended size limit (300 KiB).
+This can impact web performance.
+Assets: 
+  theme-bundle.main.js (307 KiB)[39m[22m
+
+[1m[33mWARNING[39m[22m in [1mentrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (300 KiB). This can impact web performance.
+Entrypoints:
+  main (307 KiB)
+      theme-bundle.main.js
+[39m[22m
+
+[32mok[39m -- Theme task Finished
+Generating Manifest Started...
+[32mok[39m -- Manifest Generation Finished
+[32mok[39m -- Zipping Files Finished
+[32mok[39m -- Theme Upload Finished
+Error [JobCompletionStatusCheckError]: Job Failed
+    at Object.getJob (file:///C:/Users/NLazarevic/AppData/Roaming/npm/node_modules/@bigcommerce/stencil-cli/lib/theme-api-client.js:144:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///C:/Users/NLazarevic/AppData/Roaming/npm/node_modules/@bigcommerce/stencil-cli/lib/stencil-push.utils.js:247:20 {
+  messages: [
+    {
+      error_code: 'tr_300',
+      message: 'There was a problem with the zip file. (TR-300)'
+    }
+  ]
+}
+
+
+[31mnot ok[39m -- JobCompletionStatusCheckError: Job Failed
+
+[31mThere was a problem with the zip file. (TR-300)[39m
+
+Please visit the troubleshooting page https://developer.bigcommerce.com/stencil-docs/deploying-a-theme/troubleshooting-theme-uploads.
+If this error persists, please visit https://github.com/bigcommerce/stencil-cli/issues and submit an issue.

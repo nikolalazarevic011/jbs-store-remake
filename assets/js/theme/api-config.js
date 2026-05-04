@@ -4,7 +4,7 @@
 // we use this static configuration file instead.
 
 const API_CONFIG = {
-  BASE_URL: "http://jbs-new-store-bigcommerce.lwccportal.com/api",
+  BASE_URL: "https://jbs-new-store-bigcommerce.lwccportal.com/api",
   ENDPOINTS: {
     PRODUCT_MODIFIERS: "/products/{{productId}}/modifiers",
     CUSTOMER_DOWNLOADS: "/customers/orders-with-links"

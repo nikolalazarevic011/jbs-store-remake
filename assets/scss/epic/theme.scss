@@ -15,13 +15,27 @@
         }
 
         .navPages-action {
-            &:hover,
-            &.activePage {
-                color: #D4BA75 !important;
+            &.is-root {
+                &:hover,
+                &.activePage {
+                    color: stencilColor("navPages-color") !important;
 
-                svg {
-                    fill: #D4BA75 !important;
-                    stroke: #D4BA75 !important;
+                    svg {
+                        fill: stencilColor("navPages-color") !important;
+                        stroke: stencilColor("navPages-color") !important;
+                    }
+                }
+            }
+
+            &:not(.is-root) {
+                &:hover,
+                &.activePage {
+                    color: #CF982A !important;
+
+                    svg {
+                        fill: #CF982A !important;
+                        stroke: #CF982A !important;
+                    }
                 }
             }
         }

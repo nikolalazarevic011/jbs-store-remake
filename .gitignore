@@ -1,7 +1,10 @@
 # Agent configuration (keep local only)
 .claude/
 .agent/
+.agents/
 .gemini/
+_bmad/
+.claudeignore
 tmpclaude-*
 
 # Node modules

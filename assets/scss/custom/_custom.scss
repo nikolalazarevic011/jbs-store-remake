@@ -186,7 +186,7 @@
         transition: color 0.2s ease;
 
         &:hover {
-            color: #D4BA75;
+            color: #CF982A;
             text-decoration: underline;
         }
     }
@@ -265,7 +265,7 @@
     margin-bottom: 15px;
     padding: 12px 15px;
     background-color: rgba(0, 0, 0, 0.45);
-    border-left: 4px solid #D4BA75;
+    border-left: 4px solid #CF982A;
     font-size: 14px;
     color: #ffffff !important;
     border-radius: 0 4px 4px 0;
@@ -324,14 +324,50 @@
 // Fix: Add white background to header to prevent body background image from showing through
 .header {
     background-color: #ffffff;
+    border-bottom: none;
+    padding-bottom: 0;
 }
+
+.navPages-wrap {
+    background-color: #EDDB80 !important;
+    border-bottom: none;
+
+    // Ensure category links are readable on beige background
+    .navPages-action {
+        color: #333333 !important;
+
+        &:hover {
+            color: #000000 !important;
+        }
+
+        svg {
+            fill: #333333 !important;
+        }
+    }
+
+    // Submenus should match the beige bar
+    .navPage-subMenu {
+        background-color: #EDDB80 !important;
+
+        .navPage-subMenu-action,
+        .navPage-childList-action {
+            color: #333333 !important;
+
+            &:hover {
+                color: #000000 !important;
+            }
+        }
+    }
+}
+
+
 
 // =============================================================================
 // Marketing Banner Styles
 // =============================================================================
 
 .banners {
-    background-color: #D4BA75;
+    background-color: #CF982A;
     color: #ffffff;
     font-size: 16px;
 
@@ -538,16 +574,14 @@
 
 .sidebarBlock-image {
     overflow: hidden;
-    margin: 0 -1px -1px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    margin-top: -1px; // Touch and overlap the sidebar bottom border
+    border-top: none;
 }
 
 .sidebarBlock-image img {
     mix-blend-mode: multiply;
     display: block;
-    width: calc(100% + 6px);
-    margin-right: -6px;
+    width: 100%; // Fit the column width exactly
 }
 
 html, body {
@@ -590,6 +624,17 @@ html, body {
         li {
             color: #ffffff !important;
         }
+
+        // Ensure alert boxes keep their intended text color (not white)
+        .alertBox {
+            color: stencilColor("alert-color") !important;
+
+            p,
+            span {
+                color: stencilColor("alert-color") !important;
+            }
+        }
+
 
         // Panel (New Customer box etc.) — keep dark text on light bg
         .panel,
@@ -677,8 +722,10 @@ html, body {
             color: #ffffff !important;
 
             small {
-                color: #D4BA75 !important;
-                font-weight: 600 !important;
+                color: #CF982A !important;
+                font-weight: 800 !important; // Extra bold for visibility
+                font-size: 11px !important; // Slightly larger
+                text-transform: uppercase !important;
                 opacity: 1 !important;
             }
         }
@@ -721,9 +768,14 @@ html, body {
     }
 }
 
-// Apply to all account page types
 body[class*="page-type_account"],
-body.page-type_editaccount {
+body.page-type_account,
+body.page-type_address_book,
+body.page-type_address_book_add,
+body.page-type_address_book_edit,
+body.page-type_editaccount,
+body.page-type_createaccount,
+body.page-type_login {
     @include dark-bg-page-content;
 }
 
@@ -760,27 +812,12 @@ body.page-type_wishlists {
     }
 }
 
-// Apply to account details/edit page
-body.page-type_editaccount {
-    .body .page-bg {
-        filter: brightness(0.55);
-    }
-}
-
-// Apply to login page
-body.page-type_login {
-    @include dark-bg-page-content;
-
-    // Darken the bright sky/cloud background image
-    .body .page-bg {
-        filter: brightness(0.55);
-    }
-}
-
 // Darken background on account + wishlist + login pages (same sky image)
 body[class*="page-type_account"],
 body.page-type_editaccount,
-body.page-type_wishlists {
+body.page-type_createaccount,
+body.page-type_wishlists,
+body.page-type_login {
     .body .page-bg {
         filter: brightness(0.55);
     }
@@ -813,7 +850,6 @@ body.page-type_wishlists {
 // Create Account & Cart pages — text visibility on sky background
 // =============================================================================
 
-body.page-type_createaccount,
 body.page-type_cart {
     .body .page-bg {
         filter: brightness(0.55);
@@ -884,4 +920,48 @@ body.page-type_search {
 
 .body > .container {
     margin-top: 50px;
+}
+
+// =============================================================================
+// Footer Styles
+// =============================================================================
+
+.footer-info-heading {
+    color: #008140 !important;
+}
+
+// Ensure account page elements are always visible on dark backgrounds
+body[class*="page-type_account"],
+body.page-type_wishlists,
+body.page-type_login {
+    .body {
+        .breadcrumbs a, 
+        .breadcrumb-label,
+        .breadcrumb {
+            color: #ffffff !important;
+        }
+
+        .page-heading,
+        .account-heading {
+            color: #ffffff !important;
+        }
+
+        .form-label, 
+        label {
+            color: #ffffff !important;
+        }
+
+        // Notification bars (Alert Boxes) — white text for contrast on dark bg
+        .alertBox {
+            color: #ffffff !important;
+
+            p, span, a {
+                color: #ffffff !important;
+            }
+
+            .alertBox-icon svg {
+                fill: #ffffff !important;
+            }
+        }
+    }
 }

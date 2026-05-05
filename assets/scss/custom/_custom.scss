@@ -604,12 +604,14 @@ html, body {
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
         }
 
-        // Breadcrumbs
-        .breadcrumbs a,
-        .breadcrumb-label,
-        .breadcrumb {
+        // Breadcrumbs — Increased specificity to override global dark breadcrumbs
+        .breadcrumbs,
+        .breadcrumbs .breadcrumb,
+        .breadcrumbs .breadcrumb a,
+        .breadcrumbs .breadcrumb-label {
             color: #ffffff !important;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            opacity: 1 !important;
         }
 
         .breadcrumbs .breadcrumb.is-active .breadcrumb-label {
@@ -625,13 +627,30 @@ html, body {
             color: #ffffff !important;
         }
 
-        // Ensure alert boxes keep their intended text color (not white)
+        // Notification bars (Alert Boxes) — ensure visibility on dark bg
         .alertBox {
-            color: stencilColor("alert-color") !important;
+            color: #ffffff !important;
+            border: none !important;
 
-            p,
-            span {
-                color: stencilColor("alert-color") !important;
+            // Make error boxes dark red so white text is readable
+            &.alertBox--error {
+                background-color: #cc0000 !important;
+            }
+
+            // Success boxes dark green
+            &.alertBox--success {
+                background-color: #008140 !important;
+            }
+
+            // Generic alert boxes dark grey
+            background-color: rgba(0, 0, 0, 0.6) !important;
+
+            p, span, a {
+                color: #ffffff !important;
+            }
+
+            .alertBox-icon svg {
+                fill: #ffffff !important;
             }
         }
 
@@ -643,11 +662,24 @@ html, body {
             text-shadow: none !important;
         }
 
-        // But buttons inside panels keep their own text color (white on dark btn)
+        // Buttons — Ensure all buttons are visible on dark background
+        .button,
+        button,
+        [type="submit"],
         .panel .button,
         .panel button,
         .panel [type="submit"] {
             color: #ffffff !important;
+
+            // Secondary/Cancel buttons often have no background, let's give them a border
+            &:not(.button--primary) {
+                border: 1px solid rgba(255, 255, 255, 0.5) !important;
+                background-color: rgba(255, 255, 255, 0.05) !important;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.15) !important;
+                }
+            }
         }
 
         // Sidebar buttons (like Print Invoice)
@@ -770,12 +802,17 @@ html, body {
 
 body[class*="page-type_account"],
 body.page-type_account,
+body.page-type_editaccount,
+body.page-type_createaccount,
+body.page-type_login,
+body.page-type_shippingaddressform,
 body.page-type_address_book,
 body.page-type_address_book_add,
 body.page-type_address_book_edit,
-body.page-type_editaccount,
-body.page-type_createaccount,
-body.page-type_login {
+body.page-type_order_status,
+body.page-type_orders,
+body.page-type_return,
+body.page-type_returns {
     @include dark-bg-page-content;
 }
 
@@ -930,38 +967,3 @@ body.page-type_search {
     color: #008140 !important;
 }
 
-// Ensure account page elements are always visible on dark backgrounds
-body[class*="page-type_account"],
-body.page-type_wishlists,
-body.page-type_login {
-    .body {
-        .breadcrumbs a, 
-        .breadcrumb-label,
-        .breadcrumb {
-            color: #ffffff !important;
-        }
-
-        .page-heading,
-        .account-heading {
-            color: #ffffff !important;
-        }
-
-        .form-label, 
-        label {
-            color: #ffffff !important;
-        }
-
-        // Notification bars (Alert Boxes) — white text for contrast on dark bg
-        .alertBox {
-            color: #ffffff !important;
-
-            p, span, a {
-                color: #ffffff !important;
-            }
-
-            .alertBox-icon svg {
-                fill: #ffffff !important;
-            }
-        }
-    }
-}

@@ -1,6 +1,6 @@
 {
     "name": "Epic Superstore",
-    "version": "1.0.12",
+    "version": "1.0.18",
     "template_engine": "handlebars_v4",
     "meta": {
         "price": 19500,
@@ -401,7 +401,7 @@
         "epic-header-search-input-icon-color": "#282828",
         "epic-show-header-icon-labels": true,
         "epic-toggle-body-background-image": true,
-        "epic-body-background-image": "Group-1.png",
+        "epic-body-background-image": "Group-1.jpg",
         "epic-toggle-tiktok-icon": true,
         "epic-breadcrumb-position": "left",
         "epic-page-heading-position": "left",
@@ -869,7 +869,7 @@
                 "epic-header-search-input-icon-color": "#282828",
                 "epic-show-header-icon-labels": true,
                 "epic-toggle-body-background-image": true,
-                "epic-body-background-image": "Group-1.png",
+                "epic-body-background-image": "Group-1.jpg",
                 "epic-toggle-tiktok-icon": true,
                 "epic-breadcrumb-position": "left",
                 "epic-page-heading-position": "left",

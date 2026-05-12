@@ -900,9 +900,39 @@ body.page-type_cart {
     .page-content p,
     .page-content h3,
     .account-body .form-label,
-    .form-label {
+    .form-label,
+    .cart-header-item,
+    .cart-item-name__label,
+    .cart-item-name a,
+    .cart-item-value,
+    .cart-total-label,
+    .cart-total-value,
+    .shipping-estimate-show,
+    .shipping-estimate-value,
+    .coupon-code-add,
+    .coupon-code-cancel,
+    .cart-total-value span {
         color: #ffffff !important;
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .shipping-estimate-show,
+    .coupon-code-add,
+    .coupon-code-cancel {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        text-decoration: underline !important;
+        cursor: pointer !important;
+    }
+
+    .cart-item-option-description,
+    .cart-item-edit-link {
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    .cart-remove.icon svg {
+        fill: #ffffff !important;
     }
 
     .form-input,
@@ -910,7 +940,12 @@ body.page-type_cart {
         color: #333333 !important;
         background-color: #ffffff !important;
     }
+
+    .loadingOverlay {
+        display: none !important;
+    }
 }
+
 
 // =============================================================================
 // Search page — text visibility on sky background
@@ -950,6 +985,26 @@ body.page-type_search {
         text-shadow: none !important;
     }
 }
+
+// =============================================================================
+// 404 Page — text visibility on dark background
+// =============================================================================
+
+body.page-type_404 {
+    .body .page-bg {
+        filter: brightness(0.55);
+    }
+
+    .page-heading,
+    .breadcrumb-label,
+    .breadcrumb a,
+    .breadcrumb-item,
+    .page-content p {
+        color: #ffffff !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+}
+
 
 // =============================================================================
 // Main Container Spacing

@@ -137,6 +137,7 @@
                     <span>{{product.call_for_price}}</span>
                 </p>
             {{/if}}
+            {{!-- Hiding price on product detail page per request
             <div class="productView-price">
                 {{#or customer (unless settings.hide_price_from_guests)}}
                     {{> components/products/price price=product.price}}
@@ -144,6 +145,7 @@
                     {{> components/common/login-for-pricing}}
                 {{/or}}
             </div>
+            --}}
             {{{region name="product_below_price"}}}
             {{product.detail_messages}}
             <dl class="productView-info">

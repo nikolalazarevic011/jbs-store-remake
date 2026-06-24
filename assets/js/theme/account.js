@@ -50,8 +50,8 @@ export default class Account extends PageManager {
         Wishlist.load(this.context);
 
         if ($editAccountForm.length) {
-            this.registerEditAccountValidation($editAccountForm);
             this.reorderEditAccountForm($editAccountForm);
+            this.registerEditAccountValidation($editAccountForm);
             if (this.$state.is("input")) {
                 insertStateHiddenField(this.$state);
             }
@@ -720,8 +720,17 @@ export default class Account extends PageManager {
             .find('[data-field-type="ConfirmPassword"]')
             .closest(".form-field");
 
-        if ($email.length && $currentPass.length) {
-            $currentPass.insertAfter($email);
+        if ($currentPass.length && $newPass.length) {
+            $currentPass.insertBefore($newPass);
+        } else if (!$currentPass.length && $newPass.length) {
+            const currentPassHtml = `
+            <div class="form-field" data-field-type="CurrentPassword">
+                <label class="form-label" for="current_password">
+                    Current Password
+                </label>
+                <input type="password" class="form-input" name="current_password" id="current_password" />
+            </div>`;
+            $(currentPassHtml).insertBefore($newPass);
         }
 
         if ($newPass.length) {

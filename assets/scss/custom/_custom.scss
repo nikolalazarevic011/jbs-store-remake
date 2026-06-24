@@ -1022,3 +1022,112 @@ body.page-type_404 {
     color: #008140 !important;
 }
 
+// =============================================================================
+// MP3 Play Sample Button overrides
+// =============================================================================
+
+.price-and-sample-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-bottom: spacing("eighth");
+    flex-wrap: wrap;
+
+    .card-text.price-card-text,
+    .listItem-price {
+        margin-bottom: 0 !important;
+    }
+}
+
+.play-sample-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: transparent !important;
+    color: #CF982A !important;
+    border: 1px solid #CF982A !important;
+    border-radius: 4px;
+    padding: 6px 12px !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    height: auto !important;
+    min-width: auto !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    &:hover, &:focus {
+        background-color: #CF982A !important;
+        color: #ffffff !important;
+        border-color: #CF982A !important;
+    }
+
+    &.is-playing {
+        background-color: #004173 !important;
+        border-color: #004173 !important;
+        color: #ffffff !important;
+    }
+
+    &.is-loading {
+        background-color: #f5f5f5 !important;
+        border-color: #e0e0e0 !important;
+        color: #888888 !important;
+        cursor: wait;
+    }
+
+    .play-btn-icon-wrapper {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+
+        .icon {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+            stroke: currentColor;
+        }
+
+        .icon-loading {
+            animation: play-btn-spin 1s linear infinite;
+        }
+    }
+}
+
+@keyframes play-btn-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// Product detail page specific spacing
+.productView-sample {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    
+    .play-sample-btn {
+        padding: 10px 20px !important;
+        font-size: 13px !important;
+        border-radius: 4px;
+
+        .play-btn-icon-wrapper {
+            width: 18px;
+            height: 18px;
+
+            .icon {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+}
+

@@ -1,10 +1,71 @@
 import epicSearch from "./epic-search";
+import initAudioPlayer from "./audio-player";
 
 export default function customScripts(context) {
     if (context.themeSettings["epic-toggle-search"]) epicSearch();
 
     searchFix();
     navActiveFix();
+    initAudioPlayer();
+    initWidgetPlayButtons();
+}
+
+export function initWidgetPlayButtons() {
+    async function fetchAndInjectPlayButton(card) {
+        if (card.dataset.processedPlayButton) return;
+        card.dataset.processedPlayButton = 'true';
+
+        const linkEl = card.querySelector('a');
+        if (!linkEl) return;
+        const href = linkEl.getAttribute('href');
+        if (!href || href === '#') return;
+
+        try {
+            const res = await fetch(href);
+            const text = await res.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
+            
+            const sampleBtn = doc.querySelector('.play-sample-btn');
+            if (sampleBtn && sampleBtn.getAttribute('data-sample-url') && !card.querySelector('.play-sample-btn')) {
+                const playBtnClone = sampleBtn.cloneNode(true);
+                const priceEl = card.querySelector('[data-test-id="product-set-widget-price"]');
+                if (priceEl) {
+                    const container = document.createElement('div');
+                    container.className = 'price-and-sample-container widget-price-container';
+                    
+                    priceEl.parentNode.insertBefore(container, priceEl);
+                    container.appendChild(priceEl);
+                    container.appendChild(playBtnClone);
+                    
+                    priceEl.style.width = 'auto';
+                    priceEl.style.setProperty('width', 'auto', 'important');
+                }
+            }
+        } catch (e) {
+            console.error('Error fetching sample button for ' + href, e);
+        }
+    }
+
+    function scanAndInject() {
+        const cards = document.querySelectorAll('.css-1k0woj');
+        if (cards.length > 0) {
+            cards.forEach(card => {
+                fetchAndInjectPlayButton(card);
+            });
+        }
+    }
+
+    scanAndInject();
+
+    const observer = new MutationObserver(() => {
+        scanAndInject();
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 }
 
 export function navActiveFix() {

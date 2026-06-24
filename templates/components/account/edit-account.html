@@ -72,6 +72,10 @@
                     value="{{forms.edit_account.phone}}"
                 />
             </div>
+        </div>
+        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #e5e5e5;">
+        <h3 style="margin-bottom: 1.5rem;">Change Password</h3>
+        <div class="form-row form-row--half">
             {{#each forms.edit_account.fields}}
                 {{#if private_id '!==' 'EmailAddress'}}
                     {{{dynamicComponent 'components/common/forms'}}}

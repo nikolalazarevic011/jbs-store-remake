@@ -30,20 +30,26 @@ const PRODUCT_VIEW_PRICE_SELECTOR = '.productView-price';
 const BATCH_SIZE = 100;
 const EN_DASH = '\u2013';
 
-function currencyPrefixFrom(text) {
-    const match = String(text || '').trim().match(/^[^\d\-+.,]+/);
+// A currency prefix is a short symbol/code immediately preceding a number,
+// e.g. "$5.00", "£5.00", "USD 5.00". Price labels such as "MSRP:" or
+// "Now: (Inc. Tax)" never sit directly before a digit, so they can't be
+// mistaken for currency.
+const CURRENCY_BEFORE_NUMBER = /([^\d\s]{1,3})\s*\d/;
 
-    return match ? match[0].trim() : '$';
+function currencyPrefixFrom(text) {
+    const match = String(text || '').match(CURRENCY_BEFORE_NUMBER);
+
+    return match ? match[1] : null;
 }
 
 function detectCurrencyPrefix(root) {
-    const candidates = root.querySelectorAll(`${CARD_PRICE_SELECTOR}, .price`);
+    const candidates = root.querySelectorAll(`${CARD_PRICE_SELECTOR}, .price, .productView-price`);
 
     for (const node of candidates) {
-        const text = node.textContent.trim();
+        const prefix = currencyPrefixFrom(node.textContent);
 
-        if (/\d/.test(text)) {
-            return currencyPrefixFrom(text);
+        if (prefix) {
+            return prefix;
         }
     }
 
@@ -147,7 +153,7 @@ function collectPriceNodes(root) {
     return byId;
 }
 
-function applyRanges(byId, ranges) {
+function applyRanges(byId, ranges, pagePrefix) {
     Object.keys(ranges).forEach((id) => {
         const range = ranges[id];
         const $nodes = byId.get(Number(id));
@@ -155,7 +161,7 @@ function applyRanges(byId, ranges) {
         if (!$nodes || !$nodes.length) return;
 
         $nodes.forEach(($node) => {
-            const prefix = currencyPrefixFrom($node.textContent);
+            const prefix = currencyPrefixFrom($node.textContent) || pagePrefix;
             $node.textContent = formatRange(range, prefix);
         });
     });
@@ -227,8 +233,10 @@ export default async function priceRange(root = document) {
             Object.assign(ranges, result);
         }
 
-        applyRanges(byId, ranges);
-        injectProductViewHeadline(root, ranges, detectCurrencyPrefix(root));
+        const pagePrefix = detectCurrencyPrefix(root);
+
+        applyRanges(byId, ranges, pagePrefix);
+        injectProductViewHeadline(root, ranges, pagePrefix);
 
         return ranges;
     } catch (error) {

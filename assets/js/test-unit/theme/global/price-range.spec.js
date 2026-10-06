@@ -185,6 +185,35 @@ describe('priceRange', () => {
         });
     });
 
+    describe('PDP headline with on-page price labels', () => {
+        it('injects a clean range without swallowing MSRP/Was/Now labels', async () => {
+            root.innerHTML = `
+                <div class="productView" data-entity-id="131">
+                    <section class="productView-details product-data">
+                        <div class="productView-product">
+                            <h1 class="productView-title">Conference</h1>
+                            <div data-content-region="product_below_price"></div>
+                        </div>
+                    </section>
+                </div>
+                <div class="card-text price-card-text" data-test-info-type="price">
+                    <div class="price-section">
+                        <span>MSRP:</span>
+                        <span data-product-price-without-tax class="price">$20.00</span>
+                    </div>
+                </div>
+            `;
+            mockFetch({ success: true, data: { 131: { min: 20, max: 25 } } });
+
+            await priceRange(root);
+
+            const headline = root.querySelector('.productView-price[data-product-price-range]');
+
+            expect(headline.textContent).toBe('$20.00 \u2013 $25.00');
+            expect(headline.textContent).not.toMatch(/MSRP|Was:|Now:/);
+        });
+    });
+
     describe('option-parent product page', () => {
         it('injects a headline range', async () => {
             root.innerHTML = productView(131);

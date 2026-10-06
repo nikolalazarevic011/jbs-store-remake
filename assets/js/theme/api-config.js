@@ -7,6 +7,7 @@ const API_CONFIG = {
   BASE_URL: "https://jbs-new-store-bigcommerce.lwccportal.com/api",
   ENDPOINTS: {
     PRODUCT_MODIFIERS: "/products/{{productId}}/modifiers",
+    PRODUCT_PRICE_RANGES: "/products/price-ranges",
     CUSTOMER_DOWNLOADS: "/customers/orders-with-links"
   },
   DEFAULT_HEADERS: {

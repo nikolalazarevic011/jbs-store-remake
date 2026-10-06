@@ -13,6 +13,7 @@ import cartPreview from './global/cart-preview';
 import carousel from './common/carousel';
 import svgInjector from './global/svg-injector';
 import customScripts from './custom/custom-scripts';
+import priceRange from './global/price-range';
 
 export default class Global extends PageManager {
     onReady() {
@@ -27,5 +28,6 @@ export default class Global extends PageManager {
         mobileMenuToggle();
         svgInjector();
         customScripts(this.context);
+        priceRange();
     }
 }

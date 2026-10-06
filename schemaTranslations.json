@@ -1044,6 +1044,33 @@
     "pl": "Ukryj nagłówek strony kontaktowej",
     "ja": "お問い合わせページの見出しを非表示にする"
   },
+  "i18n.EpicHomeSections": {
+    "default": "Home page sections"
+  },
+  "i18n.EpicHomeHeroEnable": {
+    "default": "Show hero carousel section"
+  },
+  "i18n.EpicHomeFormatEnable": {
+    "default": "Show shop by format section"
+  },
+  "i18n.EpicHomeConferenceEnable": {
+    "default": "Show featured conference section"
+  },
+  "i18n.EpicHomeReleasesEnable": {
+    "default": "Show new releases section"
+  },
+  "i18n.EpicHomeSpeakersEnable": {
+    "default": "Show featured speakers section"
+  },
+  "i18n.EpicHomeMerchEnable": {
+    "default": "Show branded merchandise section"
+  },
+  "i18n.EpicHomeTestimonialsEnable": {
+    "default": "Show testimonials section"
+  },
+  "i18n.EpicHomeNewsletterEnable": {
+    "default": "Show newsletter section"
+  },
   "i18n.Products": {
     "default": "Products",
     "fr": "Produits",

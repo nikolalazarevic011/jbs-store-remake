@@ -1,0 +1,66 @@
+{{!--
+    Home Section: Branded Merchandise
+    Split layout: a hero panel beside a Rail of Product Cards.
+--}}
+<section class="eh-section eh-section--merch eh-bg-white">
+    <div class="eh-container">
+        {{> components/epic/home/section-header
+            eyebrow="WEAR THE VISION"
+            title="BRANDED"
+            accent="MERCHANDISE"
+            viewAllLabel="SHOP MERCHANDISE"
+            viewAllUrl="/merchandise/"
+            theme="light"}}
+
+        <div class="eh-merch-split">
+            <div class="eh-merch-hero">
+                <div class="eh-merch-hero__gradient" aria-hidden="true"></div>
+                <span class="eh-merch-hero__caption">Photo: branded tumbler and tote on a desk</span>
+                <div class="eh-merch-hero__ink">
+                    <a href="/merchandise/" class="eh-btn eh-btn--primary">SHOP MERCHANDISE</a>
+                </div>
+            </div>
+
+            <div class="eh-rail eh-merch-rail" data-eh-rail aria-label="Branded merchandise">
+                <article class="eh-card">
+                    <div class="eh-card__cover eh-merch-cover eh-cover-grad--green">
+                        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 17h32l-3 26H11L8 17Zm10 0v-5a6 6 0 0 1 12 0v5"></path></svg>
+                        <span>LUNCH COOLER TOTE</span>
+                    </div>
+                    <div class="eh-card__info">
+                        <div class="eh-card__badges"><span class="eh-badge eh-badge--physical">SHIPS TO YOU</span></div>
+                        <h3 class="eh-card__title">Lunch Cooler Tote</h3>
+                        <p class="eh-card__price">$19.99</p>
+                        <a href="/lunch-cooler-tote/" class="eh-btn eh-btn--primary eh-btn--block">ADD TO CART</a>
+                    </div>
+                </article>
+
+                <article class="eh-card">
+                    <div class="eh-card__cover eh-merch-cover eh-cover-grad--ink">
+                        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M9 12h26l-3 30H14L9 12Zm0 0h26M32 18h5a5 5 0 0 1 0 10h-4M26 12l7-10h7"></path></svg>
+                        <span>TUMBLER WITH STAINLESS STEEL STRAW</span>
+                    </div>
+                    <div class="eh-card__info">
+                        <div class="eh-card__badges"><span class="eh-badge eh-badge--physical">SHIPS TO YOU</span></div>
+                        <h3 class="eh-card__title">Tumbler with Stainless Steel Straw</h3>
+                        <p class="eh-card__price">$17.99</p>
+                        <a href="/tumbler-with-stainless-steel-straw/" class="eh-btn eh-btn--primary eh-btn--block">ADD TO CART</a>
+                    </div>
+                </article>
+
+                <article class="eh-card">
+                    <div class="eh-card__cover eh-merch-cover eh-cover-grad--gold">
+                        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M18 5h12v7l5 6v23H13V18l5-6V5Zm-1 0h14M13 24h22"></path></svg>
+                        <span>STAINLESS STEEL BOTTLE</span>
+                    </div>
+                    <div class="eh-card__info">
+                        <div class="eh-card__badges"><span class="eh-badge eh-badge--physical">SHIPS TO YOU</span></div>
+                        <h3 class="eh-card__title">Stainless Steel Bottle</h3>
+                        <p class="eh-card__price">$15.99</p>
+                        <a href="/stainless-steel-bottle/" class="eh-btn eh-btn--primary eh-btn--block">ADD TO CART</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>

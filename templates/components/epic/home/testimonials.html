@@ -1,0 +1,39 @@
+{{!--
+    Home Section: Testimonials
+    Three approved-style quotes with attribution. Content is hardcoded (see ADR-0001).
+--}}
+<section class="eh-section eh-section--testimonials eh-bg-light">
+    <div class="eh-container">
+        {{> components/epic/home/section-header
+            eyebrow="FROM OUR COMMUNITY"
+            title="WORDS THAT"
+            accent="ELEVATE"
+            theme="light"}}
+
+        <div class="eh-testimonials-grid">
+            <blockquote class="eh-testimonial">
+                <p>“The conference sessions gave me a plan I could actually use in my business the next Monday.”</p>
+                <footer class="eh-testimonial__footer">
+                    <span class="eh-testimonial__circle">M</span>
+                    <cite class="eh-testimonial__cite">MARCUS T.</cite>
+                </footer>
+            </blockquote>
+
+            <blockquote class="eh-testimonial">
+                <p>“Faith and practical business skills in one place. I listen to these recordings on every drive.”</p>
+                <footer class="eh-testimonial__footer">
+                    <span class="eh-testimonial__circle">D</span>
+                    <cite class="eh-testimonial__cite">DENISE R.</cite>
+                </footer>
+            </blockquote>
+
+            <blockquote class="eh-testimonial">
+                <p>“The teaching helped me see my business as part of my purpose.”</p>
+                <footer class="eh-testimonial__footer">
+                    <span class="eh-testimonial__circle">A</span>
+                    <cite class="eh-testimonial__cite">ANDRE W.</cite>
+                </footer>
+            </blockquote>
+        </div>
+    </div>
+</section>

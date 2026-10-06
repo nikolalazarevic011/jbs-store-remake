@@ -1,0 +1,60 @@
+{{!--
+    Home Section: Featured Speakers
+    Dark band with a horizontally scrolling Rail of speaker portraits.
+--}}
+<section class="eh-section eh-section--speakers eh-bg-ink eh-has-chevrons">
+    <svg class="eh-chevron-bg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="0.16" fill="none">
+            <polyline points="0,20 50,-10 100,20"></polyline>
+            <polyline points="0,30 50,0 100,30"></polyline>
+            <polyline points="0,40 50,10 100,40"></polyline>
+            <polyline points="0,50 50,20 100,50"></polyline>
+            <polyline points="0,60 50,30 100,60"></polyline>
+            <polyline points="0,70 50,40 100,70"></polyline>
+            <polyline points="0,80 50,50 100,80"></polyline>
+            <polyline points="0,90 50,60 100,90"></polyline>
+            <polyline points="0,100 50,70 100,100"></polyline>
+        </g>
+    </svg>
+    <div class="eh-container eh-relative">
+        {{> components/epic/home/section-header
+            eyebrow="LEARN FROM LEADERS"
+            title="FEATURED"
+            accent="SPEAKERS"
+            viewAllLabel="ALL SPEAKERS"
+            theme="dark"}}
+
+        <div class="eh-rail eh-speakers-rail" aria-label="Featured speakers">
+            <a href="#" class="eh-speaker">
+                <span class="eh-speaker__portrait"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#eh-person-silhouette"></use></svg></span>
+                <h3 class="eh-speaker__name">Dr. Bill Winston</h3>
+                <span class="eh-speaker__link">View sessions <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </a>
+            <a href="#" class="eh-speaker">
+                <span class="eh-speaker__portrait"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#eh-person-silhouette"></use></svg></span>
+                <h3 class="eh-speaker__name">Anne Beiler</h3>
+                <span class="eh-speaker__link">View sessions <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </a>
+            <a href="#" class="eh-speaker">
+                <span class="eh-speaker__portrait"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#eh-person-silhouette"></use></svg></span>
+                <h3 class="eh-speaker__name">Richard Montañez</h3>
+                <span class="eh-speaker__link">View sessions <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </a>
+            <a href="#" class="eh-speaker">
+                <span class="eh-speaker__portrait"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#eh-person-silhouette"></use></svg></span>
+                <h3 class="eh-speaker__name">Samuel Chand</h3>
+                <span class="eh-speaker__link">View sessions <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </a>
+            <a href="#" class="eh-speaker">
+                <span class="eh-speaker__portrait"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#eh-person-silhouette"></use></svg></span>
+                <h3 class="eh-speaker__name">Dr. Wendy Borlabi</h3>
+                <span class="eh-speaker__link">View sessions <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </a>
+            <a href="#" class="eh-speaker">
+                <span class="eh-speaker__portrait"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#eh-person-silhouette"></use></svg></span>
+                <h3 class="eh-speaker__name">Valarie Grant</h3>
+                <span class="eh-speaker__link">View sessions <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </a>
+        </div>
+    </div>
+</section>

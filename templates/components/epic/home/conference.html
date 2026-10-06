@@ -1,0 +1,46 @@
+{{!--
+    Home Section: Featured Conference
+    Split layout: cover panel beside descriptive copy. The cover uses the linked
+    product's image when one is supplied, otherwise a gradient placeholder.
+--}}
+<section class="eh-section eh-section--conference eh-bg-white">
+    <div class="eh-container">
+        <div class="eh-split">
+            <div class="eh-cover">
+                <div class="eh-cover__outline" aria-hidden="true"></div>
+                <div class="eh-cover__inner">
+                    {{#if product.image}}
+                    <a href="{{product.url}}" class="eh-cover__image" aria-label="{{product.name}}">
+                        {{> components/common/responsive-img
+                            image=product.image
+                            class="eh-cover__photo"
+                            fallback_size='800w'
+                            lazyload=theme_settings.lazyload_mode
+                            default_image=theme_settings.default_image_product}}
+                    </a>
+                    {{/if}}
+                    <div class="eh-cover__labels">
+                        <span class="eh-cover__year">2024</span>
+                        <span class="eh-cover__event">BUSINESS &amp; LEADERSHIP CONFERENCE</span>
+                        <span class="eh-cover__speaker">FULL CONFERENCE</span>
+                        <svg class="eh-cover__chevron" viewBox="0 0 48 30" aria-hidden="true"><use href="#eh-release-chevron"></use></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="eh-conference-content">
+                <header class="eh-section-header eh-section-header--light eh-section-header--stacked">
+                    <div class="eh-section-header__main">
+                        <span class="eh-eyebrow">FEATURED CONFERENCE</span>
+                        <h2 class="eh-section-header__title">THE 2024 BUSINESS &amp; LEADERSHIP <strong>CONFERENCE</strong></h2>
+                    </div>
+                </header>
+                <p class="eh-conference-desc">Experience practical, faith-infused teaching designed specifically for today's business leaders. These sessions provide the blueprint to eradicate poverty and create lasting wealth.</p>
+                <div class="eh-conference-actions">
+                    <a href="/conferences/" class="eh-btn eh-btn--primary">BROWSE SESSIONS</a>
+                </div>
+                <p class="eh-conference-meta">MP3 FROM $20 · MP4 FROM $25</p>
+            </div>
+        </div>
+    </div>
+</section>

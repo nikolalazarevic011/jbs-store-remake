@@ -16,6 +16,22 @@ Five canonical labels: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-f
 
 Single-context layout: one `GLOSSARY.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
 
+## Deploying the theme
+
+Use the reusable `deploy_theme.py` for all theme deploys. It bumps the version, bundles with the Stencil CLI, uploads the zip, waits for the theme job, and optionally activates.
+
+```bash
+python deploy_theme.py --dry-run                  # show the plan, change nothing
+python deploy_theme.py --bump patch               # bump + bundle + upload (no activate)
+python deploy_theme.py --bump patch --activate    # bump + bundle + upload + activate
+python deploy_theme.py --no-bump --activate       # deploy the current version as-is
+```
+
+- Credentials come from `secrets.stencil.json` (git-ignored). Never hardcode them.
+- The store hash defaults to the JBS store and can be overridden with `--store-hash` or `BIGCOMMERCE_STORE_HASH`.
+- `--variation` picks the theme variation to activate (default: the first). Use `--variation "Camping"` for this store.
+- The old one-off scripts (`push_theme_jbs.py`, `activate_theme_jbs.py`) are superseded by `deploy_theme.py`.
+
 
 # Project goals
 based on replit's ideas at - C:\Users\NLazarevic\ME\jbs new store\replit-design v2

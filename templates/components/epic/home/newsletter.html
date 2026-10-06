@@ -1,0 +1,37 @@
+{{!--
+    Home Section: Newsletter
+    Centred call to action over an ink band with a chevron background.
+--}}
+<section class="eh-section eh-section--newsletter eh-bg-ink eh-has-chevrons eh-has-chevrons--masked">
+    <div class="eh-chevron-mask" aria-hidden="true">
+        <svg class="eh-chevron-bg eh-chevron-bg--center" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+            <g stroke="currentColor" stroke-width="0.16" fill="none">
+                <polyline points="0,30 50,0 100,30"></polyline>
+                <polyline points="0,40 50,10 100,40"></polyline>
+                <polyline points="0,50 50,20 100,50"></polyline>
+                <polyline points="0,60 50,30 100,60"></polyline>
+                <polyline points="0,70 50,40 100,70"></polyline>
+                <polyline points="0,80 50,50 100,80"></polyline>
+            </g>
+        </svg>
+    </div>
+    <div class="eh-container eh-relative">
+        <header class="eh-section-header eh-section-header--dark eh-section-header--center eh-section-header--stacked">
+            <div class="eh-section-header__main">
+                <span class="eh-eyebrow">STAY CONNECTED</span>
+                <h2 class="eh-section-header__title">RISE ABOVE. <strong>STAY INFORMED.</strong></h2>
+                <p class="eh-section-header__subline">New conference releases, program dates and events — delivered to your inbox.</p>
+            </div>
+        </header>
+
+        <form class="eh-newsletter-form" action="{{urls.subscribe.action}}" method="post" data-eh-newsletter-form>
+            <input type="hidden" name="action" value="subscribe">
+            <input type="hidden" name="nl_first_name" value="{{customer.first_name}}">
+            <input type="hidden" name="check" value="1">
+            <label class="eh-u-hidden" for="eh-newsletter-email">Email address</label>
+            <input id="eh-newsletter-email" class="eh-newsletter-input" type="email" name="nl_email" placeholder="Email address" required>
+            <button type="submit" class="eh-btn eh-btn--primary">SIGN UP</button>
+        </form>
+        <p class="eh-newsletter-feedback" role="status" aria-live="polite" data-eh-newsletter-feedback></p>
+    </div>
+</section>

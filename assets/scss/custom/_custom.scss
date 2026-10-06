@@ -812,7 +812,9 @@ body.page-type_address_book_edit,
 body.page-type_order_status,
 body.page-type_orders,
 body.page-type_return,
-body.page-type_returns {
+body.page-type_returns,
+body.page-type_forgotpassword,
+body.page-type_getnewpassword {
     @include dark-bg-page-content;
 }
 
@@ -854,7 +856,9 @@ body[class*="page-type_account"],
 body.page-type_editaccount,
 body.page-type_createaccount,
 body.page-type_wishlists,
-body.page-type_login {
+body.page-type_login,
+body.page-type_forgotpassword,
+body.page-type_getnewpassword {
     .body .page-bg {
         filter: brightness(0.55);
     }
@@ -983,6 +987,17 @@ body.page-type_search {
         color: #333333 !important;
         background-color: #ffffff !important;
         text-shadow: none !important;
+    }
+
+    // Search results tab bar (Products / Content tabs) — white text
+    .navBar--sub,
+    .navBar-action,
+    .navBar-action:hover,
+    .navBar-action:focus,
+    .navBar-item.is-active .navBar-action,
+    .navBar-action-color--active {
+        color: #ffffff !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
     }
 }
 

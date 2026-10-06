@@ -1,0 +1,30 @@
+{{!--
+    Home Section Heading
+    Shared heading for Home Sections. Renders an eyebrow, a two-tone title
+    (last word in brand accent) and an optional "view all" link.
+    Params: eyebrow, title, accent, viewAllLabel, viewAllUrl, theme (light|dark), controls (bool)
+--}}
+<header class="eh-section-header eh-section-header--{{theme}}">
+    <div class="eh-section-header__main">
+        <span class="eh-eyebrow">{{eyebrow}}</span>
+        <h2 class="eh-section-header__title">{{title}} <strong>{{accent}}</strong></h2>
+        {{#if subline}}<p class="eh-section-header__subline">{{subline}}</p>{{/if}}
+    </div>
+    {{#if viewAllLabel}}
+    <div class="eh-section-header__actions">
+        <a href="{{#if viewAllUrl}}{{viewAllUrl}}{{else}}#{{/if}}" class="eh-view-all">{{viewAllLabel}}
+            <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg>
+        </a>
+        {{#if controls}}
+        <div class="eh-rail-controls">
+            <button class="eh-rail-arrow" type="button" data-eh-rail-prev aria-label="Scroll backwards">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12H4 M10 6l-6 6 6 6"></path></svg>
+            </button>
+            <button class="eh-rail-arrow" type="button" data-eh-rail-next aria-label="Scroll forwards">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16 M14 6l6 6-6 6"></path></svg>
+            </button>
+        </div>
+        {{/if}}
+    </div>
+    {{/if}}
+</header>

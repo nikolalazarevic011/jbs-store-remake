@@ -1,0 +1,70 @@
+{{!--
+    Home Section: Hero
+    Bespoke split hero carousel: image panel beside an ink block with headline,
+    supporting line and actions. Content is hardcoded (see ADR-0001) and the whole
+    Section is gated by the epic-home-hero-enable Section Toggle.
+    The photo panel is a gradient placeholder until real imagery is supplied.
+--}}
+<section class="eh-hero" aria-label="Featured promotions">
+    <div class="eh-hero__carousel">
+        <article class="eh-hero__slide is-active" data-eh-hero-slide>
+            <div class="eh-hero__photo" aria-hidden="true">
+                <span class="eh-hero__photo-caption">Photo: conference speaker on stage, gold gradient</span>
+                <svg class="eh-hero__chevrons" viewBox="0 0 500 190"><use href="#eh-hero-chevron-lines"></use></svg>
+            </div>
+            <div class="eh-hero__ink-block">
+                <div class="eh-hero__content">
+                    <span class="eh-eyebrow eh-eyebrow--gold">BUSINESS &amp; LEADERSHIP CONFERENCE 2025</span>
+                    <h2 class="eh-hero__title">ELEVATE YOUR <strong>LEADERSHIP.</strong></h2>
+                    <p class="eh-hero__subline">Watch the 2025 sessions from Dr. Wendy Borlabi, Sylvia Crawley Spann and more.</p>
+                    <div class="eh-hero__actions">
+                        <a href="#" class="eh-btn eh-btn--primary">WATCH THE SESSIONS</a>
+                        <a href="#" class="eh-btn eh-btn--outline">BROWSE ALL CONFERENCES</a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="eh-hero__slide" data-eh-hero-slide>
+            <div class="eh-hero__photo" aria-hidden="true">
+                <span class="eh-hero__photo-caption">Photo: conference speaker on stage, gold gradient</span>
+                <svg class="eh-hero__chevrons" viewBox="0 0 500 190"><use href="#eh-hero-chevron-lines"></use></svg>
+            </div>
+            <div class="eh-hero__ink-block">
+                <div class="eh-hero__content">
+                    <span class="eh-eyebrow eh-eyebrow--gold">THE JOSEPH CENTER STORE</span>
+                    <h2 class="eh-hero__title">IT'S TIME FOR YOU TO <strong>TAKE FLIGHT.</strong></h2>
+                    <p class="eh-hero__subline">Elevate your leadership to realize your business dreams.</p>
+                    <div class="eh-hero__actions">
+                        <a href="#" class="eh-btn eh-btn--primary">SHOP THE STORE</a>
+                        <a href="#" class="eh-btn eh-btn--outline">ABOUT THE JOSEPH CENTER</a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <div class="eh-hero__controls eh-container">
+        <div class="eh-hero__controls-inner">
+            <button class="eh-hero__btn" type="button" data-eh-hero-prev aria-label="Previous slide">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12H4 M10 6l-6 6 6 6"></path></svg>
+            </button>
+            <div class="eh-hero__dots">
+                <button class="eh-hero__dot is-active" type="button" data-eh-hero-dot="0" aria-label="Go to slide 1"></button>
+                <button class="eh-hero__dot" type="button" data-eh-hero-dot="1" aria-label="Go to slide 2"></button>
+            </div>
+            <button class="eh-hero__btn" type="button" data-eh-hero-next aria-label="Next slide">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16 M14 6l6 6-6 6"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="eh-hero__chevron-bridge" aria-hidden="true">
+        <div class="eh-hero__chevron-layer eh-hero__chevron-layer--upper">
+            <svg viewBox="0 0 500 190"><use href="#eh-hero-chevron-lines"></use></svg>
+        </div>
+        <div class="eh-hero__chevron-layer eh-hero__chevron-layer--lower">
+            <svg viewBox="0 0 500 190"><use href="#eh-hero-chevron-lines"></use></svg>
+        </div>
+    </div>
+</section>

@@ -54,7 +54,8 @@ keep header and footer intact,
    - How to use: Connect to active Chrome instances or inspect local web server previews to diagnose and verify visual or functional bugs directly in the browser environment before making code changes.
 8. If any of the previous cli or MCP or CLI commands fail TELL USER/ME so he can fix it   
 9. NEVER add any AI-agent attribution (e.g. `Co-authored-by:` trailers, `Authored-by`, agent names) to commits or PRs. Every commit/PR must look authored purely by the user; strip any such marker before pushing/merging.
-10. To my work repo/org - https://github.com/lwcc-web , never commit the any bmad or skills (like mattpocock that we installed) files or folders like./skills-lock.json or any or .agent folders etc
-11. api keys to api call backoffice for whatever u need, find them at - C:\Users\NLazarevic\ME\jbs new store\webhook
-12. local dev theme stencil server at - http://localhost:42134/, if you're reading this it's prob already started so try accessing it
+10. NEVER push to a WORK repo/remote without my explicit consent. This applies to the `lwcc-web` org and any repo under the work account (`nlazarevic733`), including the `work` remote. Personal repos (`nikolalazarevic011`) may be pushed normally. If a push targets a work remote, STOP and ask first — even if an earlier instruction said "push". Also never `gh auth switch` to the work account on your own; ask first (it is shared with other repos).
+11. To my work repo/org - https://github.com/lwcc-web , never commit the any bmad or skills (like mattpocock that we installed) files or folders like./skills-lock.json or any or .agent folders etc
+12. api keys to api call backoffice for whatever u need, find them at - C:\Users\NLazarevic\ME\jbs new store\webhook
+13. local dev theme stencil server at - http://localhost:42134/, if you're reading this it's prob already started so try accessing it
   

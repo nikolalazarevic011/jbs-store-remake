@@ -1,6 +1,6 @@
 {
   "name": "Epic Superstore",
-  "version": "1.0.19",
+  "version": "1.0.25",
   "template_engine": "handlebars_v4",
   "meta": {
     "price": 19500,
@@ -455,7 +455,7 @@
     "epic-copyright-link-three-url": "",
     "epic-cards-per-row": "3",
     "epic-card-brand": true,
-    "epic-card-summary": true,
+    "epic-card-summary": false,
     "epic-card-toggle-figcaption-buttons": false,
     "epic-card-text-color": "#000000",
     "epic-card-msrp-color": "#757575",
@@ -466,7 +466,12 @@
     "epic-home-speakers-enable": true,
     "epic-home-merch-enable": true,
     "epic-home-testimonials-enable": true,
-    "epic-home-newsletter-enable": true
+    "epic-home-newsletter-enable": false,
+    "epic-enable-lock-screen": true,
+    "epic-lock-screen-hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+    "epic-lock-screen-eyebrow": "PRIVATE PREVIEW",
+    "epic-lock-screen-heading": "Store Under Construction",
+    "epic-lock-screen-subheading": "Please enter the access code to preview the store."
   },
   "read_only_files": [
     "/assets/scss/components/citadel",
@@ -504,8 +509,13 @@
           "fashion_jewelry"
         ]
       },
-      "images": {},
-      "settings": {}
+      "settings": {
+        "epic-enable-lock-screen": true,
+        "epic-lock-screen-hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "epic-lock-screen-eyebrow": "PRIVATE PREVIEW",
+        "epic-lock-screen-heading": "Store Under Construction",
+        "epic-lock-screen-subheading": "Please enter the access code to preview the store."
+      }
     },
     {
       "name": "Camping & Outdoors",
@@ -939,7 +949,7 @@
         "epic-copyright-link-three-url": "",
         "epic-cards-per-row": "3",
         "epic-card-brand": true,
-        "epic-card-summary": true,
+        "epic-card-summary": false,
         "epic-card-toggle-figcaption-buttons": false,
         "epic-card-text-color": "#333333",
         "epic-card-msrp-color": "#4d4d4d",
@@ -950,7 +960,12 @@
         "epic-home-speakers-enable": true,
         "epic-home-merch-enable": true,
         "epic-home-testimonials-enable": true,
-        "epic-home-newsletter-enable": true
+        "epic-home-newsletter-enable": false,
+        "epic-enable-lock-screen": true,
+        "epic-lock-screen-hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "epic-lock-screen-eyebrow": "PRIVATE PREVIEW",
+        "epic-lock-screen-heading": "Store Under Construction",
+        "epic-lock-screen-subheading": "Please enter the access code to preview the store."
       }
     },
     {
@@ -1037,7 +1052,12 @@
         "epic-home-speakers-enable": true,
         "epic-home-merch-enable": true,
         "epic-home-testimonials-enable": true,
-        "epic-home-newsletter-enable": true
+        "epic-home-newsletter-enable": true,
+        "epic-enable-lock-screen": true,
+        "epic-lock-screen-hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "epic-lock-screen-eyebrow": "PRIVATE PREVIEW",
+        "epic-lock-screen-heading": "Store Under Construction",
+        "epic-lock-screen-subheading": "Please enter the access code to preview the store."
       }
     }
   ]

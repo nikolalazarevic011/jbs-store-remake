@@ -31,6 +31,15 @@ python deploy_theme.py --no-bump --activate       # deploy the current version a
 - The store hash defaults to the JBS store and can be overridden with `--store-hash` or `BIGCOMMERCE_STORE_HASH`.
 - `--variation` picks the theme variation to activate (default: the first). Use `--variation "Camping"` for this store.
 - The old one-off scripts (`push_theme_jbs.py`, `activate_theme_jbs.py`) are superseded by `deploy_theme.py`.
+- **Activation is production.** Run `--activate` only when the user explicitly says go live or activate. For a routine fix, stop after the upload (no `--activate`) and let the user confirm first. A deploy never touches store-side Page Builder content, so a live theme push cannot overwrite a widget's text.
+
+## Store runtime
+
+- Build gotchas that recur here live in repo memory: read `/memories/repo/jbs-store-theme-gotchas.md` before editing SCSS, JS page modules, or theme settings. The two that cost the most time: run `npm run buildDev` after **any** `assets/js/` edit (the dev server does not rebuild the webpack bundle), and the home page's `page_type` is `default`, not `home`.
+- The Stencil SCSS compiler (libsass) rejects native CSS `max()`/`min()` and mixed-unit `calc()`. Use a plain value plus a `@media (min-width: N)` override.
+
+- Picklist API (the theme's `api-config.js` calls it): plain PHP app at `public_html/bc-plugins/jbs_store_plugin/api` on the LWCC VPS, served as `jbs-new-store-bigcommerce.lwccportal.com`. The similarly named `/home/lwccp0/jbs-new-store-bigcommerce.lwccportal.com/` is a decoy — edits there do nothing.
+- Server access: `ssh -p 2276 -i ~/.ssh/cpanel2026 lwccp0@lwccportal.com`.
 
 
 # Project goals
@@ -49,7 +58,15 @@ keep header and footer intact,
 4. Use the installed `jira-cli` (`jira`) for Jira operations instead of the MCP server. Run `jira --help` if you need to see available commands. Jira space for this project is called {JNS}, ASK ME FOR IT IF I FORGET TO PASTE IT HERE
 5. Use the Notion MCP or CLI for Notion operations. Create sub-pages inside pages if you cannot fit all thoughts on one page due to body limits, and to keep content organized. Notion page is https://app.notion.com/p/NEW-JBS-store-330778a5fc8a80d1ad13ca4a2f3053ac 
 6. If you are unsure about how to implement a specific pattern or library feature, always use the Context7 MCP or CLI to query up-to-date documentation and examples.
-7. Use the Chrome DevTools MCP for browser debugging, web development, and live UI/runtime inspection.
+7. Use the Chrome DevTools MCP for browser debugging, web development, and live UI/runtime inspection. If a call fails with "browser is already running for ... chrome-profile", a leftover Chrome holds the MCP's profile lock. Clear it by killing only the MCP's Chrome (matched by `--user-data-dir`, ~8 of 100+ `chrome.exe`, so your real browser windows survive), then retry the call:
+
+   ```powershell
+   Get-CimInstance Win32_Process -Filter "Name='chrome.exe'" |
+     Where-Object { $_.CommandLine -like '*chrome-devtools-mcp*chrome-profile*' } |
+     ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
+   ```
+
+   The MCP server respawns Chrome on the next call, so nothing else needs restarting. If the MCP still fails after that, fall back to the integrated browser page (the Playwright-driven tools) for the session.
    - When to use: Debugging frontend code, inspecting DOM elements/CSS styles, monitoring console logs and JavaScript errors, analyzing live network requests, checking local storage/session data, or validating UI layouts in real-time.
    - How to use: Connect to active Chrome instances or inspect local web server previews to diagnose and verify visual or functional bugs directly in the browser environment before making code changes.
 8. If any of the previous cli or MCP or CLI commands fail TELL USER/ME so he can fix it   

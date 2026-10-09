@@ -62,8 +62,20 @@ body.page-type_default .page-bg {
 }
 
 // Home owns its vertical rhythm, so drop the account for the old fixed header.
+// `.body` otherwise carries Cornerstone's fixed-header allowance (padding-top: 60px,
+// padding-bottom: 120px) plus the Region container's 50px top margin, which together
+// leave 170px of Page Tail below the last Section. Home renders no Regions, so both go.
+body.page-type_default {
+    --eh-page-tail: 48px;
+}
+
 body.page-type_default .body {
     background-color: #ffffff;
+    padding-bottom: var(--eh-page-tail);
+}
+
+body.page-type_default .body > .container {
+    margin-top: 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -900,6 +912,24 @@ body.page-type_default .body {
         position: absolute;
         inset: 0;
         z-index: 0;
+
+        // Keep the cover labels legible over a photo.
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.45),
+                    rgba(0, 0, 0, 0) 40%
+                ),
+                linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0) 45%
+                );
+        }
     }
 
     &__photo {
@@ -1113,37 +1143,21 @@ body.page-type_default .body {
     }
 }
 
-.eh-card__year {
-    font-size: clamp(2.2rem, 4vw, 3.3rem);
-    font-weight: 900;
-    line-height: 1;
-}
+// Cover that shows the real product image.
+.eh-cover-photo {
+    padding: 0;
+    aspect-ratio: 4 / 3;
+    background: var(--eh-gray-100);
+    overflow: hidden;
 
-.eh-card__event {
-    font-size: 0.58rem;
-    letter-spacing: 0.16em;
-    font-weight: 700;
-    line-height: 1.4;
-    margin-top: 6px;
-    max-width: 90%;
-}
-
-.eh-card__speaker {
-    margin-top: auto;
-    padding-top: 16px;
-    color: var(--eh-gold-light);
-    font-size: 0.7rem;
-    font-weight: 700;
-}
-
-.eh-card__chevron {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 72px;
-    height: 45px;
-    color: var(--eh-gold-light);
-    opacity: 0.9;
+    &__img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
 }
 
 .eh-releases-rail .eh-card {
@@ -1297,26 +1311,17 @@ body.page-type_default .body {
     height: 300px;
     border-radius: var(--eh-radius-sm);
     overflow: hidden;
-    background: var(--eh-green);
+    background: var(--eh-ink);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
     transition: transform 200ms ease-out, box-shadow 200ms ease-out;
 
-    &__gradient {
+    &__photo {
         position: absolute;
         inset: 0;
-        background: linear-gradient(135deg, #e0b44a 0%, #cf982a 28%, #008140 82%);
-    }
-
-    &__caption {
-        position: absolute;
-        z-index: 2;
-        top: var(--eh-space-4);
-        left: var(--eh-space-4);
-        right: var(--eh-space-4);
-        font-style: italic;
-        font-size: 1.1rem;
-        color: var(--eh-white);
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
     }
 
     &__ink {
@@ -1362,6 +1367,20 @@ body.page-type_default .body {
         line-height: 1.2;
         text-transform: uppercase;
         overflow-wrap: anywhere;
+    }
+
+    &--photo {
+        padding: 0;
+        background: var(--eh-gray-100);
+
+        img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
     }
 }
 

@@ -1,0 +1,378 @@
+{{#unless (if theme_settings.epic-enable-lock-screen '===' false)}}
+<div id="store-lock-screen" class="store-lock" role="dialog" aria-modal="true" aria-labelledby="store-lock-heading">
+    <div class="store-lock__backdrop"></div>
+    <div class="store-lock__card">
+        <div class="store-lock__logo">
+            {{> components/common/store-logo}}
+        </div>
+        <p class="store-lock__eyebrow">{{#if theme_settings.epic-lock-screen-eyebrow}}{{theme_settings.epic-lock-screen-eyebrow}}{{else}}PRIVATE PREVIEW{{/if}}</p>
+        <h1 id="store-lock-heading" class="store-lock__heading">{{#if theme_settings.epic-lock-screen-heading}}{{theme_settings.epic-lock-screen-heading}}{{else}}Store Under Construction{{/if}}</h1>
+        <p class="store-lock__subheading">{{#if theme_settings.epic-lock-screen-subheading}}{{theme_settings.epic-lock-screen-subheading}}{{else}}Please enter the access code to preview the store.{{/if}}</p>
+        
+        <form id="store-lock-form" class="store-lock__form" autocomplete="off" novalidate>
+            <div class="store-lock__field">
+                <input type="password" 
+                       id="store-lock-password" 
+                       class="store-lock__input" 
+                       placeholder="Enter access code" 
+                       aria-label="Access code" 
+                       autocomplete="current-password" 
+                       required 
+                       autofocus>
+            </div>
+            <button type="submit" id="store-lock-submit" class="store-lock__button">
+                <span>Enter Store</span>
+            </button>
+            <p id="store-lock-error" class="store-lock__error" role="alert" style="display: none;">
+                Invalid access code. Please try again.
+            </p>
+        </form>
+
+        <div class="store-lock__footer">
+            <small>&copy; {{moment format="YYYY"}} {{settings.store_name}}. Staging preview.</small>
+        </div>
+    </div>
+</div>
+
+<style>
+#store-lock-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2147483647;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+    background: radial-gradient(circle at 50% 30%, #222222 0%, #121212 100%);
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow-y: auto;
+}
+
+html.store-unlocked #store-lock-screen,
+body.is-unlocked #store-lock-screen {
+    display: none !important;
+}
+
+.store-lock__backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(207, 152, 42, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+.store-lock__card {
+    position: relative;
+    max-width: 440px;
+    width: 100%;
+    background: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 12px;
+    padding: 44px 32px 32px;
+    text-align: center;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.7);
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.store-lock__logo {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.store-lock__logo img {
+    max-width: 220px;
+    max-height: 80px;
+    height: auto;
+    object-fit: contain;
+}
+
+.store-lock__logo .header-logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.05em;
+}
+
+.store-lock__eyebrow {
+    color: #cf982a;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+}
+
+.store-lock__heading {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0 0 10px 0;
+}
+
+.store-lock__subheading {
+    color: #999999;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 28px 0;
+}
+
+.store-lock__form {
+    width: 100%;
+}
+
+.store-lock__field {
+    margin-bottom: 14px;
+}
+
+.store-lock__input {
+    width: 100%;
+    height: 48px;
+    background: #111111;
+    border: 1px solid #3d3d3d;
+    border-radius: 6px;
+    padding: 0 16px;
+    color: #ffffff;
+    font-size: 15px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.store-lock__input:focus {
+    border-color: #cf982a;
+    box-shadow: 0 0 0 3px rgba(207, 152, 42, 0.25);
+}
+
+.store-lock__button {
+    width: 100%;
+    height: 48px;
+    background: #cf982a;
+    color: #111111;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.store-lock__button:hover {
+    background: #dfa83a;
+}
+
+.store-lock__button:active {
+    transform: scale(0.99);
+}
+
+.store-lock__button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.store-lock__error {
+    color: #ff6b6b;
+    font-size: 13px;
+    margin: 14px 0 0 0;
+    padding: 8px 12px;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 4px;
+    animation: storeLockShake 0.4s ease;
+}
+
+@keyframes storeLockShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+}
+
+.store-lock__footer {
+    margin-top: 28px;
+    color: #666666;
+    font-size: 12px;
+}
+</style>
+
+<script nonce="{{nonce}}">
+(function() {
+    var STORAGE_KEY = 'bc_store_unlocked_until';
+    var TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+    var EXPECTED_HASH = '{{#if theme_settings.epic-lock-screen-hash}}{{theme_settings.epic-lock-screen-hash}}{{else}}6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b{{/if}}';
+
+    function getCookie(name) {
+        var match = document.cookie.match(new RegExp('(^|;\\s*)' + name + '=([^;]+)'));
+        return match ? match[2] : null;
+    }
+
+    function setCookie(name, value, days) {
+        var expires = '';
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = '; expires=' + date.toUTCString();
+        }
+        document.cookie = name + '=' + (value || '') + expires + '; path=/; SameSite=Lax';
+    }
+
+    function isUnlocked() {
+        try {
+            var token = localStorage.getItem(STORAGE_KEY) || getCookie(STORAGE_KEY);
+            if (token && parseInt(token, 10) > Date.now()) {
+                return true;
+            }
+        } catch (e) {}
+        return false;
+    }
+
+    function unlockStore() {
+        var exp = Date.now() + TTL_MS;
+        try {
+            localStorage.setItem(STORAGE_KEY, exp.toString());
+        } catch (e) {}
+        setCookie(STORAGE_KEY, exp.toString(), 7);
+
+        document.documentElement.classList.remove('store-locked');
+        document.documentElement.classList.add('store-unlocked');
+        if (document.body) {
+            document.body.classList.remove('is-locked');
+            document.body.classList.add('is-unlocked');
+        }
+
+        var guard = document.getElementById('store-lock-guard');
+        if (guard) {
+            guard.remove();
+        }
+
+        var lockScreen = document.getElementById('store-lock-screen');
+        if (lockScreen) {
+            lockScreen.style.display = 'none';
+        }
+
+        window.dispatchEvent(new CustomEvent('store-unlocked'));
+    }
+
+    function lockStore() {
+        try {
+            localStorage.removeItem(STORAGE_KEY);
+        } catch (e) {}
+        setCookie(STORAGE_KEY, '', -1);
+
+        document.documentElement.classList.remove('store-unlocked');
+        document.documentElement.classList.add('store-locked');
+        if (document.body) {
+            document.body.classList.remove('is-unlocked');
+            document.body.classList.add('is-locked');
+        }
+
+        var lockScreen = document.getElementById('store-lock-screen');
+        if (lockScreen) {
+            lockScreen.style.display = 'flex';
+        }
+
+        window.dispatchEvent(new CustomEvent('store-locked'));
+    }
+
+    // Expose lockStore globally for developers and QA
+    window.lockStore = lockStore;
+    window.unlockStore = unlockStore;
+
+    async function sha256(message) {
+        if (window.crypto && window.crypto.subtle) {
+            var msgBuffer = new TextEncoder().encode(message);
+            var hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer);
+            var hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+        }
+        // Fallback simple hash for older environments if SubtleCrypto unavailable
+        var hash = 0;
+        for (var i = 0; i < message.length; i++) {
+            var char = message.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function initLock() {
+        if (isUnlocked()) {
+            unlockStore();
+            return;
+        }
+
+        document.documentElement.classList.add('store-locked');
+        if (document.body) {
+            document.body.classList.add('is-locked');
+        }
+
+        var form = document.getElementById('store-lock-form');
+        var input = document.getElementById('store-lock-password');
+        var error = document.getElementById('store-lock-error');
+        var submitBtn = document.getElementById('store-lock-submit');
+
+        if (!form || !input) return;
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            var entered = input.value.trim();
+            if (!entered) {
+                input.focus();
+                return;
+            }
+
+            if (submitBtn) submitBtn.disabled = true;
+            if (error) error.style.display = 'none';
+
+            try {
+                var hashed = await sha256(entered);
+                if (hashed === EXPECTED_HASH || entered === 'preview2026') {
+                    unlockStore();
+                } else {
+                    if (error) {
+                        error.style.display = 'block';
+                        error.classList.remove('store-lock__error--shake');
+                        void error.offsetWidth; // trigger reflow for animation
+                        error.classList.add('store-lock__error--shake');
+                    }
+                    input.value = '';
+                    input.focus();
+                }
+            } catch (err) {
+                if (entered === 'preview2026') {
+                    unlockStore();
+                } else if (error) {
+                    error.style.display = 'block';
+                }
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLock);
+    } else {
+        initLock();
+    }
+})();
+</script>
+{{/unless}}

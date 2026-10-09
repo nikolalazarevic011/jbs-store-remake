@@ -46,6 +46,27 @@
             flex-grow: 1;
         }
 
+        // Single-line top-level nav: the link font scales with viewport width so
+        // the full category list stays on one row at narrow desktop widths while
+        // restoring the original size on wide screens. Link padding stays trimmed
+        // and is only widened once there's enough horizontal room (>= 1500px).
+        .navPages-list:not(.navPages-list--user) {
+            > .navPages-item {
+                > .navPages-action:not(.navPage-subMenu-action) {
+                    @include breakpoint("medium") {
+                        font-size: clamp(12px, calc(0.79vw + 3.1px), 15px);
+                        padding-left: 0.15rem;
+                        padding-right: 0.15rem;
+
+                        @media (min-width: 1500px) {
+                            padding-left: 0.5rem;
+                            padding-right: 0.5rem;
+                        }
+                    }
+                }
+            }
+        }
+
         &--left {
             .navPages {
                 @include breakpoint("medium") {

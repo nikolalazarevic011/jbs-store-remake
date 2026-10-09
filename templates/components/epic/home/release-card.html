@@ -1,0 +1,41 @@
+{{!--
+    Home Section: New Release Card
+    One Product Card for the New Releases Rail. Expects a Product as its context
+    (passed as `..` from inside the custom_fields filter loop in releases.html)
+    so the format badges come from the product's real `lwcc_*` custom fields,
+    and the cover image, price and add-to-cart come from the catalog.
+--}}
+<article class="eh-card" data-entity-id="{{id}}">
+    <a class="eh-card__cover eh-cover-photo" href="{{url}}" aria-label="{{name}}">
+        {{> components/common/responsive-img
+            image=image
+            class="eh-cover-photo__img"
+            fallback_size='386w'
+            lazyload=theme_settings.lazyload_mode
+            default_image=theme_settings.default_image_product}}
+    </a>
+    <div class="eh-card__info">
+        <div class="eh-card__badges">
+            {{#each custom_fields}}
+                {{#if name '===' 'lwcc_format'}}
+                    {{#each (split value '/')}}
+                        {{#unless this '===' ''}}<span class="eh-badge eh-badge--digital">{{this}}</span>{{/unless}}
+                    {{/each}}
+                {{/if}}
+            {{/each}}
+        </div>
+        <p class="eh-card__note">Instant download</p>
+        <h3 class="eh-card__title"><a href="{{url}}" data-event-type="product-click">{{name}}</a></h3>
+        <p class="eh-card__byline">{{#each custom_fields}}{{#if name '===' 'lwcc_author'}}{{value}}{{/if}}{{/each}}</p>
+        <p class="eh-card__price">{{#if has_options}}from {{/if}}{{price.without_tax.formatted}}</p>
+        {{#if out_of_stock_message}}
+            <a href="{{url}}" class="eh-btn eh-btn--primary eh-btn--block">{{out_of_stock_message}}</a>
+        {{else}}
+            {{#if has_options}}
+                <a href="{{url}}" class="eh-btn eh-btn--primary eh-btn--block" data-event-type="product-click">CHOOSE OPTIONS</a>
+            {{else}}
+                <a href="{{add_to_cart_url}}" class="eh-btn eh-btn--primary eh-btn--block" data-event-type="add" data-button-type="add-cart">ADD TO CART</a>
+            {{/if}}
+        {{/if}}
+    </div>
+</article>

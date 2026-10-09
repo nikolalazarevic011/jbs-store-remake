@@ -1055,6 +1055,75 @@ body.page-type_404 {
     }
 }
 
+// =============================================================================
+// Category grid — align titles & price rows across cards
+// =============================================================================
+//
+// Product images already use a fixed square ratio (productgallery_size), so
+// every card's image is the same height. The only reason cards drift apart is
+// the title: cards whose title wraps to a different number of lines push the
+// summary/price rows down by different amounts. We turn the grid into a flex
+// row so every card on a line stretches to the tallest neighbour, then make
+// each card a column flexbox: the title is anchored to the top of a reserved
+// area and the price + play-sample row is pushed to the bottom. This keeps the
+// title, summary and price rows aligned across neighbouring cards (e.g. on
+// /conferences/, /sermons/, etc.). Flex-basis below matches the framework's
+// grid-column widths (2 / 3 / 6 per row) so the column sizes are unchanged.
+
+.productGrid {
+    display: flex;
+    flex-wrap: wrap;
+
+    .product {
+        // Preserve the framework column widths and stretch to full row height.
+        flex: 0 0 50%;
+        display: flex;
+
+        @include breakpoint("small") {
+            flex-basis: 33.3333%;
+        }
+
+        @include breakpoint("medium") {
+            // 3-up default; 4-up when epic-cards-per-row is 3 with a sidebar.
+            flex-basis: 25%;
+        }
+
+        .card {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            width: 100%;
+
+            .card-body {
+                display: flex;
+                flex: 1 1 auto;
+                flex-direction: column;
+                justify-content: flex-start;
+            }
+
+            // Reserve a consistent title area so cards with titles that wrap
+            // to different line counts still keep their summary/price rows
+            // aligned.
+            .card-title {
+                display: flex;
+                min-height: 2.6em; // up to two lines of title
+                align-items: flex-start;
+                justify-content: flex-start;
+            }
+
+            // Push the price + play-sample row to the bottom of the card and
+            // give it a consistent height so the price text sits on the same
+            // line regardless of how long a price is.
+            .price-and-sample-container {
+                height: 2.4em; // accommodates up to two lines of price
+                min-height: 2.4em;
+                margin-top: auto;
+                align-items: center;
+            }
+        }
+    }
+}
+
 .play-sample-btn {
     display: inline-flex;
     align-items: center;
@@ -1145,4 +1214,155 @@ body.page-type_404 {
         }
     }
 }
+
+// =============================================================================
+// Readable Account Typography
+// The theme's root font size is 14px, leaving account copy, orders, downloads,
+// forms, and auth pages small on high-res displays and triggering iOS auto-zoom
+// on input focus. These rules establish readable sizing (15-16px) across account
+// and authentication views while preserving the store's palette and styling.
+// =============================================================================
+
+$account-readable-fontSize: 16px;
+$account-readable-lineHeight: 1.65;
+
+@mixin account-readable-type {
+    // Breadcrumbs
+    .breadcrumbs .breadcrumb-label {
+        font-size: 15px !important;
+    }
+
+    // Section headings
+    .account-heading {
+        font-size: 23px !important;
+    }
+
+    // Body copy
+    .account-body p,
+    .account-content p,
+    .account-product-description,
+    .account-orderTotal,
+    .account-orderTotal-value,
+    .account-sidebar-block,
+    .account-downloads-summary p {
+        font-size: 15px !important;
+        line-height: $account-readable-lineHeight !important;
+    }
+
+    // List items (orders, returns, downloads, messages)
+    .account-listItem,
+    .account-listItem p,
+    .account-listItem span,
+    .account-listItem dd,
+    .account-listItem li {
+        font-size: 15px !important;
+        line-height: $account-readable-lineHeight !important;
+    }
+
+    .account-product-title,
+    .account-product-title a,
+    .account-downloadsItem-title {
+        font-size: 17px !important;
+        line-height: 1.4 !important;
+    }
+
+    .account-product-subtitle,
+    .account-product-price {
+        font-size: 16px !important;
+    }
+
+    // Small caps labels (ORDER PLACED, LAST UPDATE, status pills)
+    .account-product-detail-heading,
+    .account-orderStatus-label,
+    .account-orderStatus-action {
+        font-size: 13px !important;
+    }
+
+    // Tables (downloads, returns, wishlists)
+    table th,
+    table td,
+    .downloads-table th,
+    .downloads-table td,
+    .table-thead th {
+        font-size: 15px !important;
+    }
+
+    // Account tab navigation
+    .navBar--account .navBar-action {
+        font-size: 15px !important;
+    }
+
+    // Forms
+    .form-label,
+    label {
+        font-size: $account-readable-fontSize !important;
+    }
+
+    .form-input,
+    .form-select,
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] {
+        font-size: $account-readable-fontSize !important;
+    }
+
+    .button,
+    input[type="submit"] {
+        font-size: 15px !important;
+    }
+
+    // Alerts and empty states
+    .alertBox-message span,
+    .alertBox-message {
+        font-size: 15px !important;
+        line-height: $account-readable-lineHeight !important;
+    }
+}
+
+body[class*="page-type_account"],
+body.page-type_editaccount,
+body.page-type_wishlists {
+    @include account-readable-type;
+}
+
+body.page-type_getnewpassword,
+body.page-type_forgotpassword,
+body.page-type_createaccount,
+body.page-type_createaccount_thanks,
+body.page-type_login {
+    .account > p,
+    .page-content p {
+        font-size: $account-readable-fontSize !important;
+        line-height: $account-readable-lineHeight !important;
+    }
+
+    .form-label {
+        font-size: $account-readable-fontSize !important;
+    }
+
+    .breadcrumbs .breadcrumb-label {
+        font-size: 15px !important;
+    }
+
+    .form-input,
+    .form-select,
+    input[type="email"],
+    input[type="password"],
+    input[type="text"],
+    input[type="tel"] {
+        font-size: $account-readable-fontSize !important;
+    }
+
+    .button,
+    .button--primary,
+    input[type="submit"] {
+        font-size: 15px !important;
+    }
+
+    .alertBox-message span {
+        font-size: 15px !important;
+    }
+}
+
 

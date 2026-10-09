@@ -8,6 +8,98 @@ export default function customScripts(context) {
     navActiveFix();
     initAudioPlayer();
     initWidgetPlayButtons();
+    initSpeakerSearch();
+}
+
+/**
+ * Featured-speaker search narrowing.
+ *
+ * Speaker cards in the home page's "Featured Speakers" section link to a
+ * keyword search for the speaker's name. BigCommerce search is OR-based and
+ * also matches product descriptions, so a query like "Caroline Leaf" returns
+ * every sibling single whose shared description lists the whole conference
+ * lineup, even though only a couple of products are actually about her.
+ *
+ * Those speaker links carry an `eh_speaker=<name>` query parameter. On the
+ * search results page we read that value and drop any card whose title does
+ * not actually contain the speaker's name, leaving only the resources
+ * genuinely named after that speaker.
+ */
+
+const SPEAKER_PARAM = 'eh_speaker';
+
+const normalizeSpeakerText = (value) => String(value || '')
+    .toLowerCase()
+    .replace(/\b(dr|pastor|rev|mr|mrs|ms)\.?\b/g, ' ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const getSpeakerFromLocation = () => {
+    try {
+        return new URL(window.location.href).searchParams.get(SPEAKER_PARAM);
+    } catch (error) {
+        return null;
+    }
+};
+
+const getCardTitle = (card) => {
+    const title = card.querySelector('.card-title');
+    return title ? title.textContent : '';
+};
+
+const setCountLabel = (selector, count) => {
+    const node = document.querySelector(`${selector} span`);
+    if (node) node.textContent = `Products (${count})`;
+};
+
+const setHeading = (count, query) => {
+    const heading = document.querySelector('#search-results-heading .page-heading');
+    if (!heading) return;
+    const label = count === 1 ? 'result' : 'results';
+    heading.textContent = `${count} ${label} for '${query}'`;
+};
+
+// Speaker searches are exact name searches, so BigCommerce's fuzzy typo
+// suggestion ("Did you mean ...") is just noise. Drop it, along with its
+// now-empty wrapper panel.
+const removeSearchSuggestions = () => {
+    document.querySelectorAll('.search-suggestion').forEach((suggestion) => {
+        const panel = suggestion.closest('.panel');
+        suggestion.remove();
+        if (panel && !panel.textContent.trim()) panel.remove();
+    });
+};
+
+function initSpeakerSearch() {
+    // The narrowing only runs on the search results page.
+    const container = document.getElementById('product-listing-container');
+    if (!container) return;
+
+    const speaker = getSpeakerFromLocation();
+    const speakerKey = normalizeSpeakerText(speaker);
+    if (!speakerKey) return;
+
+    const cards = container.querySelectorAll('li.product');
+    let removed = 0;
+
+    cards.forEach((card) => {
+        const titleKey = normalizeSpeakerText(getCardTitle(card));
+        if (titleKey.includes(speakerKey)) return;
+        card.remove();
+        removed += 1;
+    });
+
+    // The speaker links request every match at once (`limit=100`), so all
+    // results are already on this page and any pager is misleading.
+    document.querySelectorAll('.pagination').forEach((pager) => pager.remove());
+    removeSearchSuggestions();
+
+    if (removed > 0) {
+        const remaining = cards.length - removed;
+        setCountLabel('#search-results-product-count', remaining);
+        setHeading(remaining, speaker);
+    }
 }
 
 export function initWidgetPlayButtons() {

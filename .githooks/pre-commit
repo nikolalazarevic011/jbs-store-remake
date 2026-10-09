@@ -1,0 +1,29 @@
+#!/bin/sh
+# Opt-in pre-commit guardrail. Enable once per clone:
+#   git config core.hooksPath .githooks
+#
+# Checks the staged diff only, so it stays fast:
+#   1. Rebuilds the webpack bundle when assets/js is staged. The Stencil dev server
+#      does not rebuild it, and a stale bundle is the most-repeated bug in this repo.
+#   2. Rejects whitespace errors (trailing whitespace, conflict markers).
+
+set -e
+
+if ! git diff --cached --name-only | grep -q '^assets/js/'; then
+    :
+else
+    echo "pre-commit: assets/js changed, running npm run buildDev"
+    if ! npm run buildDev >/dev/null 2>&1; then
+        echo "pre-commit: npm run buildDev FAILED. Fix the build before committing." >&2
+        npm run buildDev
+        exit 1
+    fi
+    git add assets/dist
+fi
+
+if ! git diff --cached --check; then
+    echo "pre-commit: whitespace errors above. Fix them before committing." >&2
+    exit 1
+fi
+
+exit 0

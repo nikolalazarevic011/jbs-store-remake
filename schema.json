@@ -4424,5 +4424,44 @@
         "id": "epic-card-msrp-color"
       }
     ]
+  },
+  {
+    "name": "Storefront Access Gate (Build Mode)",
+    "settings": [
+      {
+        "type": "heading",
+        "content": "Access Protection"
+      },
+      {
+        "type": "checkbox",
+        "label": "Enable Lock Screen",
+        "force_reload": true,
+        "id": "epic-enable-lock-screen"
+      },
+      {
+        "type": "text",
+        "label": "Passcode SHA-256 Hash",
+        "force_reload": true,
+        "id": "epic-lock-screen-hash"
+      },
+      {
+        "type": "text",
+        "label": "Lock Screen Eyebrow",
+        "force_reload": true,
+        "id": "epic-lock-screen-eyebrow"
+      },
+      {
+        "type": "text",
+        "label": "Lock Screen Heading",
+        "force_reload": true,
+        "id": "epic-lock-screen-heading"
+      },
+      {
+        "type": "text",
+        "label": "Lock Screen Subheading",
+        "force_reload": true,
+        "id": "epic-lock-screen-subheading"
+      }
+    ]
   }
 ]

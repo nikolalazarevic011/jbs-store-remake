@@ -19,6 +19,27 @@ export default class Home extends PageManager {
     onReady() {
         this.initHero();
         this.initRails();
+        this.initConference();
+    }
+
+    /**
+     * Featured Conference: hydrate the section from the live product via the
+     * BigCommerce Storefront GraphQL API.
+     *
+     * The SKU lives on the section (`data-eh-conference-sku`). On any failure the
+     * server-rendered fallback markup is left untouched (silent fallback), so the
+     * section always shows a valid product.
+     */
+    initConference() {
+        const section = document.querySelector('[data-eh-conference]');
+        if (!section) return;
+
+        const sku = section.getAttribute('data-eh-conference-sku');
+        if (!sku) return;
+
+        hydrateConference(section, sku).catch((error) => {
+            console.warn('[Home] Featured Conference hydration failed:', error);
+        });
     }
 
     /**
@@ -176,4 +197,219 @@ function scrollRail(rail, target) {
     // requestAnimationFrame is suspended while a tab is hidden, so guarantee the
     // scroll completes even if the animation frames never arrive.
     window.setTimeout(finish, duration + 50);
+}
+
+// -----------------------------------------------------------------------------
+// Featured Conference hydration (Storefront GraphQL)
+// -----------------------------------------------------------------------------
+
+// Static sku -> gid is unnecessary: `site.product(sku:)` resolves it directly.
+const CONFERENCE_GQL_QUERY = `
+    query FeaturedConference($sku: String!) {
+        site {
+            product(sku: $sku) {
+                entityId
+                name
+                path
+                sku
+                description
+                defaultImage {
+                    url(width: 800)
+                }
+                prices {
+                    price {
+                        value
+                        currencyCode
+                    }
+                    priceRange {
+                        min {
+                            value
+                        }
+                    }
+                }
+                customFields {
+                    edges {
+                        node {
+                            name
+                            value
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;
+
+/**
+ * Read the storefront API token the theme injects into the page
+ * (see templates/layout/base.html `{{~inject 'storefrontAPIToken' ...}}`).
+ *
+ * @returns {string|null}
+ */
+function getStorefrontToken() {
+    const scripts = Array.from(document.querySelectorAll('script:not([src])'));
+    const script = scripts.find(node => node.textContent.includes('storefrontAPIToken'));
+
+    if (!script) return null;
+
+    // The stencilBootstrap context is serialised as an escaped JSON string, so
+    // strip the backslashes before matching.
+    const text = script.textContent.replace(/\\/g, '');
+    const match = text.match(/"storefrontAPIToken"\s*:\s*"([^"]+)"/);
+
+    return match && match[1] ? match[1] : null;
+}
+
+function customField(product, name) {
+    const edges = (product.customFields && product.customFields.edges) || [];
+    const hit = edges.find(({ node }) => node.name === name);
+
+    return hit && hit.node.value ? hit.node.value.trim() : '';
+}
+
+function formatMoney(value, currencyCode) {
+    const amount = Number(value);
+
+    if (!Number.isFinite(amount)) return '';
+
+    try {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: currencyCode || 'USD',
+        }).format(amount);
+    } catch (e) {
+        return `$${amount.toFixed(2)}`;
+    }
+}
+
+function setText(root, selector, text) {
+    const node = root.querySelector(selector);
+
+    if (node && text) node.textContent = text;
+}
+
+/**
+ * Convert a product description (HTML) into plain text, decoding the handful of
+ * entities BigCommerce emits.
+ *
+ * @param {string} html
+ * @returns {string}
+ */
+function htmlToText(html) {
+    if (!html) return '';
+
+    const div = document.createElement('div');
+    div.innerHTML = html;
+
+    return (div.textContent || '').replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Split a product name into a leading main part and a trailing accent word so it
+ * maps onto the two-tone Section title.
+ *
+ * @param {string} name
+ * @returns {{ main: string, accent: string }}
+ */
+function splitConferenceTitle(name) {
+    const clean = String(name || '')
+        .replace(/\s*-\s*(Singles|Single)\s*$/i, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    const words = clean.split(' ');
+
+    if (words.length < 2) {
+        return { main: clean, accent: '' };
+    }
+
+    return {
+        main: words.slice(0, -1).join(' '),
+        accent: words[words.length - 1],
+    };
+}
+
+/**
+ * Fetch the conference product and write it into the section.
+ *
+ * @param {HTMLElement} section
+ * @param {string} sku
+ */
+async function hydrateConference(section, sku) {
+    const token = getStorefrontToken();
+
+    if (!token) return;
+
+    const response = await fetch('/graphql', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            query: CONFERENCE_GQL_QUERY,
+            variables: { sku },
+        }),
+    });
+
+    if (!response.ok) return;
+
+    const json = await response.json();
+    const product = json && json.data && json.data.site && json.data.site.product;
+
+    if (!product) return;
+
+    // Cover image + link
+    const image = product.defaultImage && product.defaultImage.url;
+    const photo = section.querySelector('[data-eh-conf-photo]');
+    const link = product.path;
+
+    if (image && photo) photo.src = image;
+
+    if (link) {
+        section.querySelectorAll('[data-eh-conf-link]').forEach((anchor) => {
+            anchor.href = link;
+            if (anchor.getAttribute('aria-label')) anchor.setAttribute('aria-label', product.name);
+        });
+    }
+
+    // Cover labels
+    const releaseYear = customField(product, 'lwcc_releaseyear');
+    const format = customField(product, 'lwcc_format');
+
+    setText(section, '[data-eh-conf-year]', releaseYear || String(new Date().getFullYear()));
+    setText(section, '[data-eh-conf-format]', format ? `DIGITAL ${format}` : '');
+
+    // Title
+    const title = splitConferenceTitle(product.name);
+
+    setText(section, '[data-eh-conf-title-main]', title.main);
+
+    const accent = section.querySelector('[data-eh-conf-title-accent]');
+
+    if (accent && title.accent) accent.textContent = title.accent;
+
+    // Description
+    const description = htmlToText(product.description);
+
+    if (description) {
+        setText(section, '[data-eh-conf-desc]', description);
+    }
+
+    // Price meta
+    const priceValue = product.prices
+        && product.prices.priceRange
+        && product.prices.priceRange.min
+        && product.prices.priceRange.min.value;
+
+    const currency = product.prices && product.prices.price && product.prices.price.currencyCode;
+
+    if (priceValue !== null && priceValue !== undefined) {
+        const parts = [];
+
+        if (format) parts.push(`DIGITAL ${format}`);
+        parts.push(`FROM ${formatMoney(priceValue, currency)}`);
+
+        setText(section, '[data-eh-conf-meta]', parts.join(' · '));
+    }
 }

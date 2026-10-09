@@ -103,6 +103,15 @@
                                     </span>
                                     <span class="play-btn-text">Play Sample</span>
                                 </button>
+                                <script>
+                                    (function() {
+                                        const btn = document.currentScript.previousElementSibling;
+                                        const url = btn.getAttribute('data-sample-url');
+                                        if (!url || !url.trim() || !url.includes('http')) {
+                                            btn.remove();
+                                        }
+                                    })();
+                                </script>
                             {{/if}}
                         {{/if}}
                     {{/each}}

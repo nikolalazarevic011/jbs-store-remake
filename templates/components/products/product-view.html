@@ -145,6 +145,16 @@
                                 <span class="play-btn-text">Play Sample</span>
                             </button>
                         </div>
+                        <script>
+                            (function() {
+                                const btn = document.currentScript.previousElementSibling.querySelector('.play-sample-btn');
+                                const url = btn.getAttribute('data-sample-url');
+                                if (!url || !url.trim() || !url.includes('http')) {
+                                    const wrapper = btn.closest('.productView-sample');
+                                    if (wrapper) wrapper.remove();
+                                }
+                            })();
+                        </script>
                     {{/if}}
                 {{/if}}
             {{/each}}

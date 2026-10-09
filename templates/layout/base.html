@@ -50,8 +50,40 @@
         {{~inject 'carouselActiveDotAriaLabel' (lang 'carousel.active_dot_aria_label')}}
         {{~inject 'carouselContentAnnounceMessage' (lang 'carousel.content_announce_message')}}
         {{~inject 'giftWrappingRemoveMessage' (lang 'cart.gift_wrapping.remove_confirm')}}
+
+        {{#unless (if theme_settings.epic-enable-lock-screen '===' false)}}
+        <style id="store-lock-guard">
+            html:not(.store-unlocked) body {
+                visibility: hidden !important;
+            }
+            html:not(.store-unlocked) #store-lock-screen {
+                visibility: visible !important;
+            }
+        </style>
+        <script nonce="{{nonce}}">
+            (function() {
+                try {
+                    var token = localStorage.getItem('bc_store_unlocked_until');
+                    if (!token) {
+                        var match = document.cookie.match(/(^|;\s*)bc_store_unlocked_until=([^;]+)/);
+                        if (match) token = match[2];
+                    }
+                    if (token && parseInt(token, 10) > Date.now()) {
+                        document.documentElement.classList.add('store-unlocked');
+                        var guard = document.getElementById('store-lock-guard');
+                        if (guard) guard.remove();
+                    } else {
+                        document.documentElement.classList.add('store-locked');
+                    }
+                } catch(e) {}
+            })();
+        </script>
+        {{/unless}}
     </head>
     <body class="page-type_{{page_type}}{{#if theme_settings.epic-toggle-search}} has--epic-search{{/if}}{{#if theme_settings.epic-toggle-sticky-header}} has--header-sticky{{/if}}{{#if theme_settings.epic-sitewide-message}} has--epic-sitewide{{/if}}">
+        {{#unless (if theme_settings.epic-enable-lock-screen '===' false)}}
+            {{> components/common/store-lock }}
+        {{/unless}}
         <svg data-src="{{cdn 'img/icon-sprite.svg'}}" class="icons-svg-sprite"></svg>
 
         {{> components/common/header }}

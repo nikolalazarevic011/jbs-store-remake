@@ -1,28 +1,36 @@
 {{!--
     Home Section: Featured Conference
-    Split layout: cover panel beside descriptive copy. The cover uses the linked
-    product's image when one is supplied, otherwise a gradient placeholder.
+    Split layout: cover panel beside descriptive copy.
+
+    The cover, title, price and link are hydrated client-side from the live
+    product via the BigCommerce Storefront GraphQL API
+    (product.sku = data-eh-conference-sku). The markup below is the
+    correct-values fallback rendered before (and without) JS, so the section is
+    never empty. See ADR-0001 / ADR-0003.
 --}}
-<section class="eh-section eh-section--conference eh-bg-white">
+<section
+    class="eh-section eh-section--conference eh-bg-white"
+    data-eh-conference
+    data-eh-conference-sku="GBLC25JBS"
+>
     <div class="eh-container">
         <div class="eh-split">
             <div class="eh-cover">
                 <div class="eh-cover__outline" aria-hidden="true"></div>
                 <div class="eh-cover__inner">
-                    {{#if product.image}}
-                    <a href="{{product.url}}" class="eh-cover__image" aria-label="{{product.name}}">
-                        {{> components/common/responsive-img
-                            image=product.image
+                    <a href="/2025-business-and-leadership-conference-singles/" class="eh-cover__image" data-eh-conf-link aria-label="2025 Business and Leadership Conference">
+                        <img
                             class="eh-cover__photo"
-                            fallback_size='800w'
-                            lazyload=theme_settings.lazyload_mode
-                            default_image=theme_settings.default_image_product}}
+                            data-eh-conf-photo
+                            src="https://cdn11.bigcommerce.com/s-okkyzcvfik/images/stencil/800w/products/226/506/2025-blc_3d_large-shopping-cart-image_dvd_v2_1__1__69026.1777402627.jpg"
+                            alt=""
+                            loading="lazy"
+                        >
                     </a>
-                    {{/if}}
                     <div class="eh-cover__labels">
-                        <span class="eh-cover__year">2024</span>
+                        <span class="eh-cover__year" data-eh-conf-year>2025</span>
                         <span class="eh-cover__event">BUSINESS &amp; LEADERSHIP CONFERENCE</span>
-                        <span class="eh-cover__speaker">FULL CONFERENCE</span>
+                        <span class="eh-cover__speaker" data-eh-conf-format>DIGITAL MP4</span>
                         <svg class="eh-cover__chevron" viewBox="0 0 48 30" aria-hidden="true"><use href="#eh-release-chevron"></use></svg>
                     </div>
                 </div>
@@ -32,14 +40,17 @@
                 <header class="eh-section-header eh-section-header--light eh-section-header--stacked">
                     <div class="eh-section-header__main">
                         <span class="eh-eyebrow">FEATURED CONFERENCE</span>
-                        <h2 class="eh-section-header__title">THE 2024 BUSINESS &amp; LEADERSHIP <strong>CONFERENCE</strong></h2>
+                        <h2 class="eh-section-header__title">
+                            <span data-eh-conf-title-main>THE 2025 BUSINESS &amp; LEADERSHIP</span>
+                            <strong data-eh-conf-title-accent>CONFERENCE</strong>
+                        </h2>
                     </div>
                 </header>
-                <p class="eh-conference-desc">Experience practical, faith-infused teaching designed specifically for today's business leaders. These sessions provide the blueprint to eradicate poverty and create lasting wealth.</p>
+                <p class="eh-conference-desc" data-eh-conf-desc>Experience practical, faith-infused teaching designed specifically for today's business leaders. The 2025 Business &amp; Leadership Conference, &ldquo;Scale Up,&rdquo; is a power-packed set of sessions with radical strategies and practical steps to help God&rsquo;s ideas for business and humanity manifest.</p>
                 <div class="eh-conference-actions">
-                    <a href="/conferences/" class="eh-btn eh-btn--primary">BROWSE SESSIONS</a>
+                    <a href="/2025-business-and-leadership-conference-singles/" class="eh-btn eh-btn--primary" data-eh-conf-link>BROWSE SESSIONS</a>
                 </div>
-                <p class="eh-conference-meta">MP3 FROM $20 · MP4 FROM $25</p>
+                <p class="eh-conference-meta" data-eh-conf-meta>DIGITAL MP4 · FROM $15.00</p>
             </div>
         </div>
     </div>

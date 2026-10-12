@@ -1,6 +1,7 @@
 {{!--
     Home Section: Featured Speakers
-    Dark band with a horizontally scrolling Rail of speaker portraits.
+    Dark band with a horizontally scrolling Rail of speaker portraits from BLC 2026.
+    Clicking a speaker opens an accessible bio dialog modal.
 --}}
 <section class="eh-section eh-section--speakers eh-bg-ink eh-has-chevrons">
     <svg class="eh-chevron-bg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -19,41 +20,284 @@
     <div class="eh-container eh-relative">
         {{> components/epic/home/section-header
             eyebrow="LEARN FROM LEADERS"
-            title="FEATURED"
-            accent="SPEAKERS"
-            theme="dark"}}
+            title="FEATURED SPEAKERS FROM"
+            accent="BLC 2026"
+            theme="dark"
+            controls=true}}
 
-        <div class="eh-rail eh-speakers-rail" aria-label="Featured speakers">
-            <a href="{{urls.search}}?search_query_adv=Dr.%20Bill%20Winston&limit=100&eh_speaker=Dr.%20Bill%20Winston" class="eh-speaker">
-                <span class="eh-speaker__portrait"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#eh-person-silhouette"></use></svg></span>
+        <div class="eh-rail eh-speakers-rail" data-eh-rail aria-label="Featured speakers from BLC 2026">
+            <button type="button" class="eh-speaker" data-speaker-open="bill" aria-haspopup="dialog" aria-controls="eh-speaker-modal-bill">
+                <span class="eh-speaker__portrait">
+                    <img src="{{cdn 'img/speakers/bill.jpg'}}" alt="Dr. Bill Winston" width="140" height="140" loading="lazy">
+                </span>
                 <h3 class="eh-speaker__name">Dr. Bill Winston</h3>
-                <span class="eh-speaker__link">View sessions <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
-            </a>
-            <a href="{{urls.search}}?search_query_adv=Gary%20Keesee&limit=100&eh_speaker=Gary%20Keesee" class="eh-speaker">
-                <span class="eh-speaker__portrait"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#eh-person-silhouette"></use></svg></span>
-                <h3 class="eh-speaker__name">Gary Keesee</h3>
-                <span class="eh-speaker__link">View sessions <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
-            </a>
-            <a href="{{urls.search}}?search_query_adv=Belinda%20Whitfield&limit=100&eh_speaker=Belinda%20Whitfield" class="eh-speaker">
-                <span class="eh-speaker__portrait"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#eh-person-silhouette"></use></svg></span>
-                <h3 class="eh-speaker__name">Belinda Whitfield</h3>
-                <span class="eh-speaker__link">View sessions <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
-            </a>
-            <a href="{{urls.search}}?search_query_adv=Willy%20Bermello&limit=100&eh_speaker=Willy%20Bermello" class="eh-speaker">
-                <span class="eh-speaker__portrait"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#eh-person-silhouette"></use></svg></span>
-                <h3 class="eh-speaker__name">Willy Bermello</h3>
-                <span class="eh-speaker__link">View sessions <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
-            </a>
-            <a href="{{urls.search}}?search_query_adv=Samuel%20Chand&limit=100&eh_speaker=Samuel%20Chand" class="eh-speaker">
-                <span class="eh-speaker__portrait"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#eh-person-silhouette"></use></svg></span>
-                <h3 class="eh-speaker__name">Samuel Chand</h3>
-                <span class="eh-speaker__link">View sessions <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
-            </a>
-            <a href="{{urls.search}}?search_query_adv=Dr.%20Caroline%20Leaf&limit=100&eh_speaker=Dr.%20Caroline%20Leaf" class="eh-speaker">
-                <span class="eh-speaker__portrait"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#eh-person-silhouette"></use></svg></span>
-                <h3 class="eh-speaker__name">Dr. Caroline Leaf</h3>
-                <span class="eh-speaker__link">View sessions <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
-            </a>
+                <p class="eh-speaker__role">Global Faith Leader, CEO & Conference Host</p>
+                <span class="eh-speaker__link">Read bio <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </button>
+
+            <button type="button" class="eh-speaker" data-speaker-open="cindy" aria-haspopup="dialog" aria-controls="eh-speaker-modal-cindy">
+                <span class="eh-speaker__portrait">
+                    <img src="{{cdn 'img/speakers/cindy.jpg'}}" alt="Dr. Cindy Trimm" width="140" height="140" loading="lazy">
+                </span>
+                <h3 class="eh-speaker__name">Dr. Cindy Trimm</h3>
+                <p class="eh-speaker__role">Best-Selling Author, Cultural & Social Architect</p>
+                <span class="eh-speaker__link">Read bio <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </button>
+
+            <button type="button" class="eh-speaker" data-speaker-open="charles" aria-haspopup="dialog" aria-controls="eh-speaker-modal-charles">
+                <span class="eh-speaker__portrait">
+                    <img src="{{cdn 'img/speakers/charles.jpg'}}" alt="Charles Payne" width="140" height="140" loading="lazy">
+                </span>
+                <h3 class="eh-speaker__name">Charles Payne</h3>
+                <p class="eh-speaker__role">Fox Business Network Journalist & CEO</p>
+                <span class="eh-speaker__link">Read bio <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </button>
+
+            <button type="button" class="eh-speaker" data-speaker-open="deloris" aria-haspopup="dialog" aria-controls="eh-speaker-modal-deloris">
+                <span class="eh-speaker__portrait">
+                    <img src="{{cdn 'img/speakers/deloris.jpg'}}" alt="Dr. Deloris Thomas" width="140" height="140" loading="lazy">
+                </span>
+                <h3 class="eh-speaker__name">Dr. Deloris Thomas</h3>
+                <p class="eh-speaker__role">President, The Joseph Center®</p>
+                <span class="eh-speaker__link">Read bio <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </button>
+
+            <button type="button" class="eh-speaker" data-speaker-open="tony" aria-haspopup="dialog" aria-controls="eh-speaker-modal-tony">
+                <span class="eh-speaker__portrait">
+                    <img src="{{cdn 'img/speakers/tony.jpg'}}" alt="Tony O. Elumelu" width="140" height="140" loading="lazy">
+                </span>
+                <h3 class="eh-speaker__name">Tony O. Elumelu</h3>
+                <p class="eh-speaker__role">Nigerian Economist, Banker & Philanthropist</p>
+                <span class="eh-speaker__link">Read bio <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </button>
+
+            <button type="button" class="eh-speaker" data-speaker-open="james" aria-haspopup="dialog" aria-controls="eh-speaker-modal-james">
+                <span class="eh-speaker__portrait">
+                    <img src="{{cdn 'img/speakers/james.jpg'}}" alt="Dr. James Mworia" width="140" height="140" loading="lazy">
+                </span>
+                <h3 class="eh-speaker__name">Dr. James Mworia</h3>
+                <p class="eh-speaker__role">Architect of TRIFIC, Champion of Innovation</p>
+                <span class="eh-speaker__link">Read bio <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </button>
+
+            <button type="button" class="eh-speaker" data-speaker-open="richard" aria-haspopup="dialog" aria-controls="eh-speaker-modal-richard">
+                <span class="eh-speaker__portrait">
+                    <img src="{{cdn 'img/speakers/richard.jpg'}}" alt="Richard Montañez" width="140" height="140" loading="lazy">
+                </span>
+                <h3 class="eh-speaker__name">Richard Montañez</h3>
+                <p class="eh-speaker__role">Inventor of Flamin' Hot Cheetos</p>
+                <span class="eh-speaker__link">Read bio <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </button>
+
+            <button type="button" class="eh-speaker" data-speaker-open="geil" aria-haspopup="dialog" aria-controls="eh-speaker-modal-geil">
+                <span class="eh-speaker__portrait">
+                    <img src="{{cdn 'img/speakers/geil.jpg'}}" alt="Geil Thompson" width="140" height="140" loading="lazy">
+                </span>
+                <h3 class="eh-speaker__name">Geil Thompson</h3>
+                <p class="eh-speaker__role">Registered Rep, Joseph Eden Capital</p>
+                <span class="eh-speaker__link">Read bio <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg></span>
+            </button>
         </div>
+
+        {{!-- Speaker Bio Modals --}}
+        <dialog id="eh-speaker-modal-bill" class="eh-speaker-modal" aria-labelledby="eh-speaker-title-bill">
+            <div class="eh-speaker-modal__card">
+                <button type="button" class="eh-speaker-modal__close" data-speaker-close aria-label="Close biography">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <div class="eh-speaker-modal__layout">
+                    <div class="eh-speaker-modal__media">
+                        <div class="eh-speaker-modal__portrait">
+                            <img src="{{cdn 'img/speakers/bill.jpg'}}" alt="Dr. Bill Winston" width="280" height="280">
+                        </div>
+                    </div>
+                    <div class="eh-speaker-modal__content">
+                        <span class="eh-speaker-modal__badge">BLC 2026 SPEAKER</span>
+                        <h3 id="eh-speaker-title-bill" class="eh-speaker-modal__name">Dr. Bill Winston</h3>
+                        <p class="eh-speaker-modal__role">Global Faith Leader, CEO & Conference Host</p>
+                        <div class="eh-speaker-modal__bio">
+                            <p>Dr. Bill Winston is the visionary founder and pastor of Living Word Christian Center, a non-denominational church located in Forest Park, Illinois, and Tuskegee Christian Center in Tuskegee, Alabama.</p>
+                            <p>Other entities under his leadership include nationally accredited Joseph Business School in Forest Park, with eleven other partnership locations across the U.S. and internationally; Living Word School of Ministry and Missions; Forest Park Plaza (a 33-acre shopping mall); Washington Plaza (in Tuskegee); and Golden Eagle Aviation among others.</p>
+                            <p>He is also the founder of Bill Winston Ministries (a ministry outreach that shares the Gospel through television, radio, and other media), and president and founder of Faith Ministries Alliance (FMA), an alliance of more than 540 churches and ministries in over 30 cities and eight countries that are under Dr. Winston’s ministerial covering and leadership. FMA’s influence reaches approximately 108,200 people in the U.S. and overseas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="eh-speaker-modal-cindy" class="eh-speaker-modal" aria-labelledby="eh-speaker-title-cindy">
+            <div class="eh-speaker-modal__card">
+                <button type="button" class="eh-speaker-modal__close" data-speaker-close aria-label="Close biography">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <div class="eh-speaker-modal__layout">
+                    <div class="eh-speaker-modal__media">
+                        <div class="eh-speaker-modal__portrait">
+                            <img src="{{cdn 'img/speakers/cindy.jpg'}}" alt="Dr. Cindy Trimm" width="280" height="280">
+                        </div>
+                    </div>
+                    <div class="eh-speaker-modal__content">
+                        <span class="eh-speaker-modal__badge">BLC 2026 SPEAKER</span>
+                        <h3 id="eh-speaker-title-cindy" class="eh-speaker-modal__name">Dr. Cindy Trimm</h3>
+                        <p class="eh-speaker-modal__role">Best-Selling Author, Cultural & Social Architect, Former Senator of Bermuda</p>
+                        <div class="eh-speaker-modal__bio">
+                            <p>Trained in Strategic Leadership at Oxford University Saïd Business School and Corporate Governance at Harvard University, Dr. Cindy Trimm is a sought-after thought leader, widely respected business and life strategist who consults executives, media titans, and heads of state, and a former senator whose portfolio included Health and Social Services, and Housing and Education. Before her policy-making career, she served as advisor to the government on social reconstruction, community development, and educational reform. Her focus today is on building communities that drive and nations that prosper.</p>
+                            <p>Dr. Trimm is the founder and CEO of Trimm International, an executive coaching, consulting, and advising company. Her work has garnered recognition from former U.S. President Barack Obama, who presented her with a Lifetime Achievement Award, and distinctions from the Queen of England, the Duke of Edinburgh, and the Governor of Bermuda. She is counted among Ebony magazine’s “Top 100 Doers and Influencers in the World”.</p>
+                            <p>An influential humanitarian, Dr. Cindy Trimm is the visionary founder of Trimm Global Charities and the Trimm Institute for Global Leadership. She is the bestselling author of over 40 titles, including Establishing Your Personal Brand, Transforming Your World Through Servant Leadership, and Communicating for Maximum Results.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="eh-speaker-modal-charles" class="eh-speaker-modal" aria-labelledby="eh-speaker-title-charles">
+            <div class="eh-speaker-modal__card">
+                <button type="button" class="eh-speaker-modal__close" data-speaker-close aria-label="Close biography">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <div class="eh-speaker-modal__layout">
+                    <div class="eh-speaker-modal__media">
+                        <div class="eh-speaker-modal__portrait">
+                            <img src="{{cdn 'img/speakers/charles.jpg'}}" alt="Charles Payne" width="280" height="280">
+                        </div>
+                    </div>
+                    <div class="eh-speaker-modal__content">
+                        <span class="eh-speaker-modal__badge">BLC 2026 SPEAKER</span>
+                        <h3 id="eh-speaker-title-charles" class="eh-speaker-modal__name">Charles Payne</h3>
+                        <p class="eh-speaker-modal__role">Fox Business Network Journalist, Host, CEO & Principal Analyst</p>
+                        <div class="eh-speaker-modal__bio">
+                            <p>Charles Payne is the host of FOX Business Network’s (FBN) Making Money with Charles Payne. He joined FOX News Media as a contributor in 2007 and provides financial analysis across FBN and FOX News Channel.</p>
+                            <p>Payne contributed to the network's national election coverage and financial panels. Over the years, Payne has hosted several town halls to help educate viewers on the investor revolution and rise of cryptocurrencies. He also helmed the Black History Month special Making Money with Charles Payne: Black History and Achieving the Dream. As an FNC contributor, Payne appears across daytime and primetime programming to provide financial insights and breaking market analysis.</p>
+                            <p>Payne began his career on Wall Street as an analyst at E.F. Hutton in 1985. In 1991, he founded Wall Street Strategies, an independent stock market research firm where he serves as CEO and principal analyst. He is the author of "Be Smart, Act Fast, Get Rich", "Unstoppable Prosperity", and "Unbreakable Investor: Build the American Dream in Any Economic Cycle".</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="eh-speaker-modal-deloris" class="eh-speaker-modal" aria-labelledby="eh-speaker-title-deloris">
+            <div class="eh-speaker-modal__card">
+                <button type="button" class="eh-speaker-modal__close" data-speaker-close aria-label="Close biography">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <div class="eh-speaker-modal__layout">
+                    <div class="eh-speaker-modal__media">
+                        <div class="eh-speaker-modal__portrait">
+                            <img src="{{cdn 'img/speakers/deloris.jpg'}}" alt="Dr. Deloris Thomas" width="280" height="280">
+                        </div>
+                    </div>
+                    <div class="eh-speaker-modal__content">
+                        <span class="eh-speaker-modal__badge">BLC 2026 SPEAKER</span>
+                        <h3 id="eh-speaker-title-deloris" class="eh-speaker-modal__name">Dr. Deloris Thomas</h3>
+                        <p class="eh-speaker-modal__role">President, The Joseph Center®</p>
+                        <div class="eh-speaker-modal__bio">
+                            <p>Dr. Deloris Thomas serves as President of The Joseph Center®, executing the vision to eradicate poverty through entrepreneurship. Her responsibilities include the strategic and global operational leadership for the nationally accredited Joseph Business School and its related entities. Dr. Thomas has traveled to over 60 countries expanding the flagship entrepreneurial program to 22 locations across six continents, empowering people to become successful entrepreneurs.</p>
+                            <p>Previously, Dr. Thomas held leadership positions in brand management and strategic planning at Fortune 500 companies such as Xerox, Kraft Foods, and Sears Roebuck & Company.</p>
+                            <p>Dr. Thomas was selected for a Notable Woman in Education Award by Crain’s Chicago Business. She authored the book Awaken to Leadership and holds a bachelor's degree in Marketing from Bentley University, an MBA from Harvard University Graduate School of Business, and a Ph.D. in organizational leadership from Regent University.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="eh-speaker-modal-tony" class="eh-speaker-modal" aria-labelledby="eh-speaker-title-tony">
+            <div class="eh-speaker-modal__card">
+                <button type="button" class="eh-speaker-modal__close" data-speaker-close aria-label="Close biography">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <div class="eh-speaker-modal__layout">
+                    <div class="eh-speaker-modal__media">
+                        <div class="eh-speaker-modal__portrait">
+                            <img src="{{cdn 'img/speakers/tony.jpg'}}" alt="Tony O. Elumelu" width="280" height="280">
+                        </div>
+                    </div>
+                    <div class="eh-speaker-modal__content">
+                        <span class="eh-speaker-modal__badge">BLC 2026 SPEAKER</span>
+                        <h3 id="eh-speaker-title-tony" class="eh-speaker-modal__name">Tony O. Elumelu</h3>
+                        <p class="eh-speaker-modal__role">Nigerian Economist, Banker & Philanthropist</p>
+                        <div class="eh-speaker-modal__bio">
+                            <p>Tony O. Elumelu is one of Africa’s leading investors and philanthropists. He is the Founder and Chairman of Heirs Holdings, his family-owned investment company committed to improving lives and transforming Africa through long-term investments in strategic sectors including financial services, hospitality, power, energy, technology, and healthcare.</p>
+                            <p>Tony is the Chairman of pan-African financial services group United Bank for Africa (UBA), which operates in 20 African countries, the United Kingdom, France, and is the only African bank with a commercial deposit-taking presence in the United States, serving more than 21 million customers globally. He also chairs Transcorp Plc and Trans-Niger Oil & Gas Limited (TNOG).</p>
+                            <p>In 2010, he created The Tony Elumelu Foundation (TEF), the pan-African philanthropy empowering a new generation of African entrepreneurs, catalysing economic growth and job creation across all 54 African countries with a $100M commitment. He was named in the TIME100 Most Influential People in the World.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="eh-speaker-modal-james" class="eh-speaker-modal" aria-labelledby="eh-speaker-title-james">
+            <div class="eh-speaker-modal__card">
+                <button type="button" class="eh-speaker-modal__close" data-speaker-close aria-label="Close biography">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <div class="eh-speaker-modal__layout">
+                    <div class="eh-speaker-modal__media">
+                        <div class="eh-speaker-modal__portrait">
+                            <img src="{{cdn 'img/speakers/james.jpg'}}" alt="Dr. James Mworia" width="280" height="280">
+                        </div>
+                    </div>
+                    <div class="eh-speaker-modal__content">
+                        <span class="eh-speaker-modal__badge">BLC 2026 SPEAKER</span>
+                        <h3 id="eh-speaker-title-james" class="eh-speaker-modal__name">Dr. James Mworia</h3>
+                        <p class="eh-speaker-modal__role">Architect of TRIFIC, Champion of Innovation in Kenya</p>
+                        <div class="eh-speaker-modal__bio">
+                            <p>Dr. James Mworia is the Group CEO and Managing Director of Centum Investment Company Plc, East Africa’s leading listed investment company. Under his transformative leadership, Centum grew from an asset base of USD 40 million to over USD 400 million without shareholder dilution, delivering strong investor returns and over USD 40 million in dividends.</p>
+                            <p>Dr. Mworia is the visionary architect of TRIFIC (The Regional Financial & Innovation Centre), Kenya’s first Services Special Economic Zone and one of only three International Financial Centers in Africa recognized by WAIFC. Over his career, he has successfully scaled businesses across banking, asset management, automotive, education, housing, and clean energy.</p>
+                            <p>He currently serves as Chairman of Sidian Bank and was awarded the Moran of the Burning Spear by the President of Kenya in December 2024. Dr. Mworia holds a Bachelor of Laws (LLB) from the University of Nairobi, is an Advocate of the High Court of Kenya, a CPA-K, and a CFA Charterholder.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="eh-speaker-modal-richard" class="eh-speaker-modal" aria-labelledby="eh-speaker-title-richard">
+            <div class="eh-speaker-modal__card">
+                <button type="button" class="eh-speaker-modal__close" data-speaker-close aria-label="Close biography">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <div class="eh-speaker-modal__layout">
+                    <div class="eh-speaker-modal__media">
+                        <div class="eh-speaker-modal__portrait">
+                            <img src="{{cdn 'img/speakers/richard.jpg'}}" alt="Richard Montañez" width="280" height="280">
+                        </div>
+                    </div>
+                    <div class="eh-speaker-modal__content">
+                        <span class="eh-speaker-modal__badge">BLC 2026 SPEAKER</span>
+                        <h3 id="eh-speaker-title-richard" class="eh-speaker-modal__name">Richard Montañez</h3>
+                        <p class="eh-speaker-modal__role">Inventor of Flamin' Hot Cheetos</p>
+                        <div class="eh-speaker-modal__bio">
+                            <p>Richard Montañez started his career at PepsiCo's Frito-Lay in 1976 as a janitor in its Rancho Cucamonga plant. He is celebrated as the creator of the iconic Flamin' Hot line of products including Flamin' Hot Cheetos, which revolutionized the snack food industry and paved the way for multicultural brand marketing.</p>
+                            <p>Throughout his career, Richard rose through executive leadership to head Multicultural Sales & Marketing across Pepsi North American divisions. Both state and federal officials have honored him with commendations for his visionary leadership, education initiatives, and economic growth advocacy.</p>
+                            <p>Richard was unanimously voted the Southern Christian Leadership Conference (SCLC) Board of Directors' very first Latino Board Member. He is also the founder of Onelite, a nonprofit foundation that feeds hundreds of thousands of families each year and delivers essential school supplies to youth nationwide.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="eh-speaker-modal-geil" class="eh-speaker-modal" aria-labelledby="eh-speaker-title-geil">
+            <div class="eh-speaker-modal__card">
+                <button type="button" class="eh-speaker-modal__close" data-speaker-close aria-label="Close biography">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <div class="eh-speaker-modal__layout">
+                    <div class="eh-speaker-modal__media">
+                        <div class="eh-speaker-modal__portrait">
+                            <img src="{{cdn 'img/speakers/geil.jpg'}}" alt="Geil Thompson" width="280" height="280">
+                        </div>
+                    </div>
+                    <div class="eh-speaker-modal__content">
+                        <span class="eh-speaker-modal__badge">BLC 2026 SPEAKER</span>
+                        <h3 id="eh-speaker-title-geil" class="eh-speaker-modal__name">Geil Thompson</h3>
+                        <p class="eh-speaker-modal__role">Registered Representative, Joseph Eden Capital</p>
+                        <div class="eh-speaker-modal__bio">
+                            <p>Geil Thompson is a dynamic voice in faith-driven financial strategy, blending industry expertise with a heart for empowering others. As a Client Relationship Manager with Joseph Eden Capital, Geil provides high-level support to senior investment leadership—monitoring fund performance, preparing portfolio projections, and coordinating communications with excellence and care.</p>
+                            <p>Geil earned dual degrees in Finance and International Business from Saint Xavier University in Chicago and maintains her Series 6 and 63 securities licenses. Her strong analytical skills and dedication to stewardship position her as a trusted professional bridging financial expertise with kingdom purpose.</p>
+                            <p>As host of the Faith & Finance Podcast, Geil brings clarity, encouragement, and insight to complex financial topics, helping listeners explore how spiritual principles inform wise wealth-building, legacy planning, and purposeful impact.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </dialog>
     </div>
 </section>

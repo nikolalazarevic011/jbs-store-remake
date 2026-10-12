@@ -1125,6 +1125,9 @@ body.page-type_404 {
 }
 
 .play-sample-btn {
+    &:not([data-sample-url*="http"]) {
+        display: none !important;
+    }
     display: inline-flex;
     align-items: center;
     justify-content: center;

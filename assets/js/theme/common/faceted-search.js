@@ -16,8 +16,10 @@ const defaultOptions = {
     priceRangeErrorSelector: '#facet-range-form .form-inlineMessage',
     priceRangeFieldsetSelector: '#facet-range-form .form-fieldset',
     priceRangeFormSelector: '#facet-range-form',
-    priceRangeMaxPriceSelector: $('#facetedSearch').length ? '#facet-range-form [name=max_price]' : '#facet-range-form [name=price_max]',
-    priceRangeMinPriceSelector: $('#facetedSearch').length ? '#facet-range-form [name=min_price]' : '#facet-range-form [name=price_min]',
+    // Use combined selectors so validator works before and after ajax sidebar swap
+    // (shop-sidebar vs facetedSearch). Evaluated at init time, not module load.
+    priceRangeMaxPriceSelector: '#facet-range-form [name=max_price], #facet-range-form [name=price_max]',
+    priceRangeMinPriceSelector: '#facet-range-form [name=min_price], #facet-range-form [name=price_min]',
     showMoreToggleSelector: '#facetedSearch .accordion-content .toggleLink',
     facetedSearchFilterItems: '#facetedSearch-filterItems .form-input',
     modal: modalFactory('#modal')[0],
@@ -55,6 +57,7 @@ class FacetedSearch {
         this.options = _.extend({}, defaultOptions, options);
         this.collapsedFacets = [];
         this.collapsedFacetItems = [];
+        this.updateViewRequestId = 0;
 
         // Init collapsibles
         collapsibleFactory();
@@ -120,16 +123,38 @@ class FacetedSearch {
 
     updateView() {
         $(this.options.blockerSelector).show();
+        const requestUrl = urlUtils.getUrl();
+        const requestId = ++this.updateViewRequestId;
 
-        api.getPage(urlUtils.getUrl(), this.requestOptions, (err, content) => {
+        api.getPage(requestUrl, this.requestOptions, (err, content) => {
             $(this.options.blockerSelector).hide();
 
-            if (err) {
-                throw new Error(err);
+            if (requestId !== this.updateViewRequestId || requestUrl !== urlUtils.getUrl()) {
+                return;
             }
 
-            // Refresh view with new content
-            this.refreshView(content);
+            if (err) {
+                window.location.assign(requestUrl);
+                return;
+            }
+
+            // Guard against stencil returning a full document instead of a fragment
+            // (e.g. bad stencil-options or template name) — injecting that would
+            // duplicate <head>/<html> inside #product-listing-container and appear
+            // as "css broke" / unstyled content.
+            const rawListing = content && (content.productListing || content.product_listing || content.results || '');
+            if (typeof rawListing === 'string' && /<\s*(html|head)\b/i.test(rawListing)) {
+                window.location.assign(requestUrl);
+                return;
+            }
+
+            try {
+                // Refresh view with new content
+                this.refreshView(content);
+            } catch (error) {
+                window.location.assign(requestUrl);
+                return;
+            }
 
             // Refresh range view when shop-by-price enabled
             const urlParams = new URLSearchParams(window.location.search);
@@ -362,6 +387,14 @@ class FacetedSearch {
         const url = $link.attr('href');
 
         event.preventDefault();
+
+        // Pagination must be hard navigation — ajax pagination has caused
+        // repeated unstyled flashes when the sidebar fragment mismatched
+        // the initial sidebar. Bypass facetedSearch for page links.
+        if ($link.closest('.pagination').length || $link.hasClass('pagination-link')) {
+            window.location.assign(url);
+            return;
+        }
 
         $link.toggleClass('is-selected');
 

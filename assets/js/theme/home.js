@@ -19,7 +19,72 @@ export default class Home extends PageManager {
     onReady() {
         this.initHero();
         this.initRails();
+        this.initSpeakers();
         this.initConference();
+    }
+
+    /**
+     * Featured Speakers: wire modal dialog open/close behaviors for BLC 2026 speakers.
+     */
+    initSpeakers() {
+        const triggers = Array.from(document.querySelectorAll('[data-speaker-open]'));
+        if (!triggers.length) return;
+
+        const closeDialog = (dialog) => {
+            if (!dialog) return;
+            if (typeof dialog.close === 'function') {
+                dialog.close();
+            } else {
+                dialog.removeAttribute('open');
+            }
+            if (!document.querySelector('dialog.eh-speaker-modal[open]')) {
+                document.body.classList.remove('eh-modal-open');
+            }
+        };
+
+        triggers.forEach((btn) => {
+            const id = btn.getAttribute('data-speaker-open');
+            const dialog = document.getElementById(`eh-speaker-modal-${id}`);
+            if (!dialog) return;
+
+            btn.addEventListener('click', () => {
+                if (typeof dialog.showModal === 'function') {
+                    dialog.showModal();
+                } else {
+                    dialog.setAttribute('open', '');
+                }
+                document.body.classList.add('eh-modal-open');
+            });
+        });
+
+        const modals = Array.from(document.querySelectorAll('.eh-speaker-modal'));
+        modals.forEach((dialog) => {
+            dialog.querySelectorAll('[data-speaker-close]').forEach((closeBtn) => {
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    closeDialog(dialog);
+                });
+            });
+
+            // Close when clicking directly on dialog backdrop (outside the inner card)
+            dialog.addEventListener('click', (event) => {
+                if (event.target === dialog) {
+                    closeDialog(dialog);
+                }
+            });
+
+            dialog.addEventListener('close', () => {
+                if (!document.querySelector('dialog.eh-speaker-modal[open]')) {
+                    document.body.classList.remove('eh-modal-open');
+                }
+            });
+
+            dialog.addEventListener('cancel', () => {
+                if (!document.querySelector('dialog.eh-speaker-modal[open]')) {
+                    document.body.classList.remove('eh-modal-open');
+                }
+            });
+        });
     }
 
     /**
@@ -304,6 +369,17 @@ function htmlToText(html) {
     return (div.textContent || '').replace(/\s+/g, ' ').trim();
 }
 
+function formatConferenceMedia(format) {
+    if (!format) return '';
+    if (format.includes('/')) {
+        return format.split('/').map(f => f.trim()).filter(Boolean).join(' · ');
+    }
+    if (/^(MP4|MP3)$/i.test(format.trim())) {
+        return `DIGITAL ${format.trim().toUpperCase()}`;
+    }
+    return format;
+}
+
 /**
  * Split a product name into a leading main part and a trailing accent word so it
  * maps onto the two-tone Section title.
@@ -376,9 +452,10 @@ async function hydrateConference(section, sku) {
     // Cover labels
     const releaseYear = customField(product, 'lwcc_releaseyear');
     const format = customField(product, 'lwcc_format');
+    const mediaLabel = formatConferenceMedia(format);
 
     setText(section, '[data-eh-conf-year]', releaseYear || String(new Date().getFullYear()));
-    setText(section, '[data-eh-conf-format]', format ? `DIGITAL ${format}` : '');
+    setText(section, '[data-eh-conf-format]', mediaLabel);
 
     // Title
     const title = splitConferenceTitle(product.name);
@@ -407,7 +484,7 @@ async function hydrateConference(section, sku) {
     if (priceValue !== null && priceValue !== undefined) {
         const parts = [];
 
-        if (format) parts.push(`DIGITAL ${format}`);
+        if (mediaLabel) parts.push(mediaLabel);
         parts.push(`FROM ${formatMoney(priceValue, currency)}`);
 
         setText(section, '[data-eh-conf-meta]', parts.join(' · '));

@@ -2,6 +2,7 @@ import { hooks } from '@bigcommerce/stencil-utils';
 import CatalogPage from './catalog';
 import compareProducts from './global/compare-products';
 import FacetedSearch from './common/faceted-search';
+import urlUtils from './common/utils/url-utils';
 import { createTranslationDictionary } from './common/utils/translations-utils';
 
 export default class Category extends CatalogPage {
@@ -38,6 +39,12 @@ export default class Category extends CatalogPage {
 
         this.initFacetedSearch();
 
+        // Pagination must be hard navigation to avoid facetedSearch ajax
+        // injecting a mismatched sidebar fragment that breaks the float grid
+        // and appears as "css broke". Strip the hook attribute so
+        // stencil-utils never emits facetedSearch-facet-clicked for pagination.
+        this.disableAjaxPagination();
+
         if (!$('#facetedSearch').length) {
             this.onSortBySubmit = this.onSortBySubmit.bind(this);
             hooks.on('sortBy-submitted', this.onSortBySubmit);
@@ -53,7 +60,7 @@ export default class Category extends CatalogPage {
             $('input[name="price_max"]').attr('value', urlParams.get('price_max'));
         }
 
-        $('a.reset-btn').on('click', () => this.setLiveRegionsAttributes($('span.reset-message'), 'status', 'polite'));
+        $('a.reset-btn').on('click', () => this.setLiveRegionAttributes($('span.reset-message'), 'status', 'polite'));
 
         this.ariaNotifyNoProducts();
     }
@@ -63,6 +70,38 @@ export default class Category extends CatalogPage {
         if ($noProductsMessage.length) {
             $noProductsMessage.trigger('focus');
         }
+    }
+
+    disableAjaxPagination() {
+        const stripPaginationFacetAttr = () => {
+            // Pagination should always be hard navigation — facetedSearch ajax
+            // for pagination swaps the sidebar fragment and has historically
+            // produced unstyled flashes / broken grid. Remove the hook attr
+            // so stencil-utils never emits facetedSearch-facet-clicked for pages.
+            $('.pagination a[data-faceted-search-facet]').removeAttr('data-faceted-search-facet');
+        };
+
+        stripPaginationFacetAttr();
+
+        // Facet filtering still uses ajax and re-renders productListing (which
+        // includes a fresh paginator with the attribute). Re-strip after each
+        // facetedSearch refresh so pagination stays hard-nav.
+        $('body').on('compareReset', stripPaginationFacetAttr);
+        // Mutation fallback in case compareReset is not triggered
+        const observer = new MutationObserver(stripPaginationFacetAttr);
+        const listing = document.getElementById('product-listing-container');
+        if (listing) observer.observe(listing, { childList: true, subtree: true });
+
+        // Last-resort capture handler: if a pagination link still has the
+        // attribute (race), force hard navigation before the faceted hook runs.
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest && e.target.closest('.pagination a[data-faceted-search-facet]');
+            if (target && target.href) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                window.location.assign(target.href);
+            }
+        }, true);
     }
 
     initFacetedSearch() {
@@ -92,8 +131,18 @@ export default class Category extends CatalogPage {
         };
 
         this.facetedSearch = new FacetedSearch(requestOptions, (content) => {
+            // Validate fragment — if stencil returns a full document, force hard navigation
+            const isInvalidFragment = typeof content.productListing === 'string'
+                && /<\s*html|<\s*head/i.test(content.productListing);
+            if (isInvalidFragment) {
+                window.location.assign(urlUtils.getUrl());
+                return;
+            }
+
             $productListingContainer.html(content.productListing);
-            $facetedSearchContainer.html(content.sidebar);
+            if (content.sidebar) {
+                $facetedSearchContainer.html(content.sidebar);
+            }
 
             $('body').triggerHandler('compareReset');
 

@@ -105,10 +105,13 @@
                                 </button>
                                 <script>
                                     (function() {
-                                        const btn = document.currentScript.previousElementSibling;
-                                        const url = btn.getAttribute('data-sample-url');
-                                        if (!url || !url.trim() || !url.includes('http')) {
-                                            btn.remove();
+                                        const s = document.currentScript;
+                                        const btn = s && s.previousElementSibling;
+                                        if (btn && btn.classList && btn.classList.contains('play-sample-btn')) {
+                                            const url = btn.getAttribute('data-sample-url');
+                                            if (!url || !url.trim() || !url.includes('http')) {
+                                                btn.remove();
+                                            }
                                         }
                                     })();
                                 </script>

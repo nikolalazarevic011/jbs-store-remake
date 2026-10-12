@@ -56,3 +56,12 @@ _Avoid_: global root font override, account color overrides
 The responsive font size clamp (`clamp(12px, calc(0.79vw + 3.1px), 15px)`) and horizontal padding rules in `assets/scss/epic/theme.scss` applied to top-level navigation items on the Primary Navigation Bar, ensuring category menus fit on a single row across tablet and desktop breakpoints without wrapping.
 _Avoid_: fixed nav font size
 
+**Speaker Card**:
+A card inside the Featured Speakers Rail displaying a speaker's portrait, full name, professional title, and a "Read bio" trigger. Functions as an interactive element to open their full biographical modal.
+_Avoid_: Speaker tile, speaker portrait block, speaker profile
+
+**Speaker Bio Modal**:
+An accessible modal dialog triggered from a Speaker Card, displaying the speaker's photograph, name, title, and unabridged conference biography without navigating away from the Home Page.
+_Avoid_: Speaker popup, biography lightbox, speaker window
+
+

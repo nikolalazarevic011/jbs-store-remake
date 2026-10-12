@@ -1,7 +1,7 @@
 # The Featured Conference Section hydrates from the Storefront GraphQL API
 
 The Featured Conference Section (`epic/home/conference.html`) renders its cover, title,
-description, price and link from the live product with SKU `GBLC25JBS`. The SKU lives on
+description, price and link from the live product with SKU `GBLC26` (previously `GBLC25JBS`). The SKU lives on
 the Section element (`data-eh-conference-sku`). On load, `assets/js/theme/home.js` reads the
 storefront API token the theme already injects (`storefrontAPIToken`, see
 `templates/layout/base.html`) and runs a `site.product(sku:)` Storefront GraphQL query, then
@@ -27,7 +27,7 @@ are dynamic.
 
 ## Consequences
 
-- The Section keeps a hardcoded fallback (correct values for `GBLC25JBS`) in the template so
+- The Section keeps a hardcoded fallback (correct values for `GBLC26`) in the template so
   it renders fully before JS and if the fetch fails. Hydration is silent-fallback: any error
   leaves the fallback untouched.
 - The storefront token must be present on the page. If `settings.storefront_api` is ever

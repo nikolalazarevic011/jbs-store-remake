@@ -147,11 +147,15 @@
                         </div>
                         <script>
                             (function() {
-                                const btn = document.currentScript.previousElementSibling.querySelector('.play-sample-btn');
-                                const url = btn.getAttribute('data-sample-url');
-                                if (!url || !url.trim() || !url.includes('http')) {
-                                    const wrapper = btn.closest('.productView-sample');
-                                    if (wrapper) wrapper.remove();
+                                const s = document.currentScript;
+                                const prev = s && s.previousElementSibling;
+                                const btn = prev && prev.querySelector ? prev.querySelector('.play-sample-btn') : null;
+                                if (btn) {
+                                    const url = btn.getAttribute('data-sample-url');
+                                    if (!url || !url.trim() || !url.includes('http')) {
+                                        const wrapper = btn.closest('.productView-sample');
+                                        if (wrapper) wrapper.remove();
+                                    }
                                 }
                             })();
                         </script>

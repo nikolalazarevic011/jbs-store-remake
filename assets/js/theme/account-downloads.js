@@ -387,17 +387,44 @@ export default class AccountDownloads extends PageManager {
                 credentials: "omit", // Change from 'include' to 'omit' to avoid CORS issues with wildcard origins
             });
 
+            let data;
             if (!response.ok) {
-                throw new Error(
-                    `API request failed with status ${response.status}`,
-                );
+                let errorBody = {};
+                try {
+                    errorBody = await response.json();
+                } catch (e) {
+                    // response is not JSON
+                }
+
+                const errorMsg = (errorBody.error || errorBody.message || "").toLowerCase();
+                // When a customer has no orders, BigCommerce returns 204 No Content which triggers a 500 on JBS/LWCC backends
+                // Or if the API responds with 404 / 204 / empty orders
+                if (response.status === 404 || errorMsg.includes("204") || errorMsg.includes("no orders") || errorMsg.includes("not found")) {
+                    console.warn("[AccountDownloads] API returned no orders/downloads:", errorBody);
+                    data = {
+                        success: true,
+                        orders_with_links: [],
+                        orders_count: 0,
+                        pagination: { current_page: page, per_page: perPage, total_orders_checked: 0 }
+                    };
+                } else {
+                    throw new Error(
+                        errorBody.error || errorBody.message || `API request failed with status ${response.status}`,
+                    );
+                }
+            } else {
+                data = await response.json();
             }
 
-            const data = await response.json();
             console.log("[AccountDownloads] API response:", data);
 
             if (!data.success) {
-                throw new Error(data.message || "Failed to fetch downloads");
+                const message = (data.message || "").toLowerCase();
+                if (message.includes("not found") || message.includes("no orders")) {
+                    data.orders_with_links = [];
+                } else {
+                    throw new Error(data.message || "Failed to fetch downloads");
+                }
             }
 
             // Check if we have any orders with download links

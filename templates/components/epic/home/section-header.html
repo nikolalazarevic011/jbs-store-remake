@@ -10,11 +10,13 @@
         <h2 class="eh-section-header__title">{{title}} <strong>{{accent}}</strong></h2>
         {{#if subline}}<p class="eh-section-header__subline">{{subline}}</p>{{/if}}
     </div>
-    {{#if viewAllLabel}}
+    {{#or viewAllLabel controls}}
     <div class="eh-section-header__actions">
+        {{#if viewAllLabel}}
         <a href="{{#if viewAllUrl}}{{viewAllUrl}}{{else}}#{{/if}}" class="eh-view-all">{{viewAllLabel}}
             <svg class="eh-inline-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#eh-inline-arrow"></use></svg>
         </a>
+        {{/if}}
         {{#if controls}}
         <div class="eh-rail-controls">
             <button class="eh-rail-arrow" type="button" data-eh-rail-prev aria-label="Scroll backwards">
@@ -26,5 +28,5 @@
         </div>
         {{/if}}
     </div>
-    {{/if}}
+    {{/or}}
 </header>

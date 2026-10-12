@@ -1189,21 +1189,28 @@ body.page-type_default .body > .container {
 }
 
 .eh-speakers-rail {
-    align-items: flex-start;
+    align-items: stretch;
+    padding-bottom: var(--eh-space-4);
 }
 
 .eh-speaker {
-    flex: 0 0 40%;
+    flex: 0 0 65%;
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     outline: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+    color: inherit;
 
     &__portrait {
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         justify-content: center;
         width: 120px;
         height: 120px;
@@ -1213,8 +1220,16 @@ body.page-type_default .body > .container {
         border: 2px solid var(--eh-gold-light);
         outline: 2px solid rgba(207, 152, 42, 0.55);
         outline-offset: 4px;
-        background: linear-gradient(135deg, #e0b44a 0%, #cf982a 32%, #008140 85%);
+        background: var(--eh-ink);
         transition: transform 0.2s, outline-color 0.2s;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
 
         svg {
             width: 85%;
@@ -1227,7 +1242,22 @@ body.page-type_default .body > .container {
         font-size: 1rem;
         font-weight: 700;
         color: var(--eh-white);
-        margin: 0 0 var(--eh-space-1);
+        margin: 0 0 4px;
+        line-height: 1.25;
+    }
+
+    &__role {
+        font-size: 0.8125rem;
+        font-weight: 500;
+        line-height: 1.35;
+        color: var(--eh-gray-300);
+        margin: 0 0 var(--eh-space-2);
+        max-width: 190px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__link {
@@ -1237,6 +1267,7 @@ body.page-type_default .body > .container {
         font-size: 0.8rem;
         font-weight: 700;
         color: var(--eh-gold-light);
+        margin-top: auto;
         transition: opacity 0.2s;
 
         .eh-inline-arrow {
@@ -1269,29 +1300,208 @@ body.page-type_default .body > .container {
     &:focus-visible {
         outline: 2px solid var(--eh-gold-light);
         outline-offset: 5px;
+        border-radius: 8px;
+    }
+}
+
+@media (min-width: 600px) {
+    .eh-speaker {
+        flex: 0 0 40%;
     }
 }
 
 @media (min-width: 768px) {
     .eh-speaker {
-        flex: 0 0 20%;
+        flex: 0 0 28%;
     }
 }
 
 @media (min-width: 1024px) {
     .eh-speakers-rail {
-        justify-content: space-between;
-        gap: 0;
-        overflow-x: visible;
+        justify-content: flex-start;
+        gap: var(--eh-space-5);
+        overflow-x: auto;
     }
 
     .eh-speaker {
-        flex: 0 0 auto;
+        flex: 0 0 200px;
     }
 
     .eh-speaker__portrait {
         width: 140px;
         height: 140px;
+    }
+}
+
+/* Speaker Bio Modal */
+body.eh-modal-open {
+    overflow: hidden;
+}
+
+.eh-speaker-modal {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: 760px;
+    width: 90vw;
+    margin: auto;
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
+    color: var(--eh-white);
+
+    &::backdrop {
+        background: rgba(18, 16, 16, 0.85);
+    }
+
+    &[open] {
+        display: block;
+        animation: ehModalFadeIn 0.25s ease-out;
+    }
+
+    &__card {
+        position: relative;
+        background: #1e1b1b;
+        border: 1px solid rgba(207, 152, 42, 0.35);
+        border-radius: 16px;
+        padding: var(--eh-space-6);
+        overflow: hidden;
+    }
+
+    &__close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(35, 31, 32, 0.85);
+        color: var(--eh-white);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s, color 0.2s, border-color 0.2s;
+        z-index: 2;
+
+        &:hover,
+        &:focus-visible {
+            background: var(--eh-gold-light);
+            border-color: var(--eh-gold-light);
+            color: var(--eh-ink);
+        }
+    }
+
+    &__layout {
+        display: flex;
+        flex-direction: column;
+        gap: var(--eh-space-5);
+    }
+
+    &__media {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__portrait {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid var(--eh-gold-light);
+        outline: 2px solid rgba(207, 152, 42, 0.5);
+        outline-offset: 4px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+    }
+
+    &__content {
+        flex: 1 1 auto;
+        min-width: 0;
+        text-align: left;
+    }
+
+    &__badge {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--eh-gold-light);
+        margin-bottom: var(--eh-space-1);
+    }
+
+    &__name {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--eh-white);
+        margin: 0 0 4px;
+        line-height: 1.2;
+    }
+
+    &__role {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--eh-gold-light);
+        margin: 0 0 var(--eh-space-4);
+        line-height: 1.35;
+    }
+
+    &__bio {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: var(--eh-gray-200);
+        max-height: 320px;
+        overflow-y: auto;
+        padding-right: var(--eh-space-3);
+
+        p {
+            margin: 0 0 var(--eh-space-3);
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+@media (min-width: 640px) {
+    .eh-speaker-modal {
+        &__layout {
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        &__media {
+            flex: 0 0 170px;
+        }
+
+        &__portrait {
+            width: 160px;
+            height: 160px;
+        }
+
+        &__name {
+            font-size: 1.65rem;
+        }
+    }
+}
+
+@keyframes ehModalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 }
 

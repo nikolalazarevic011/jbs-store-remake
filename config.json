@@ -920,7 +920,7 @@
         "epic-sidebar-subMenu-background-color": "#f6f3f3",
         "epic-toggle-category-header-fullwidth": false,
         "epic-toggle-category-refine-subcategories": true,
-        "epic-toggle-newsletter": true,
+        "epic-toggle-newsletter": false,
         "epic-newsletter-location": "inline",
         "epic-toggle-newsletter-widgets": false,
         "epic-newsletter-background-color": "#f9fafb",

@@ -2,11 +2,14 @@ import requests
 import time
 import os
 import sys
+import subprocess
+import shutil
+import glob
+import json
 
 # Configuration for JBS Store
 STORE_HASH = "okkyzcvfik"
 ACCESS_TOKEN = "4mfc9bigszpojp6wipj4ezwctzc2zyx"
-import json
 
 with open("config.json", "r") as _f:
     _cfg = json.load(_f)
@@ -18,6 +21,38 @@ HEADERS = {
     "X-Auth-Token": ACCESS_TOKEN,
     "Accept": "application/json"
 }
+
+def build_theme_zip():
+    print("[*] Cleaning up old .zip files...")
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    for old_zip in glob.glob(os.path.join(base_dir, "*.zip")):
+        try:
+            os.remove(old_zip)
+            print(f"[*] Removed previous bundle: {os.path.basename(old_zip)}")
+        except Exception as e:
+            print(f"[!] Warning: could not remove {old_zip}: {e}")
+
+    print("[*] Building the latest theme zip with stencil bundle...")
+    stencil_cmd = shutil.which("stencil.cmd") or shutil.which("stencil")
+    if not stencil_cmd:
+        print("[!] Could not find the stencil CLI on PATH.")
+        sys.exit(1)
+
+    result = subprocess.run(
+        [stencil_cmd, "bundle"],
+        cwd=base_dir,
+        check=False,
+    )
+
+    if result.returncode != 0:
+        print(f"[!] stencil bundle failed with exit code {result.returncode}")
+        sys.exit(result.returncode)
+
+    if not os.path.exists(ZIP_FILE):
+        print(f"[!] {ZIP_FILE} was not created by stencil bundle.")
+        sys.exit(1)
+
+    print(f"[*] Bundle created successfully: {ZIP_FILE}")
 
 def upload_theme():
     print(f"[*] Uploading {ZIP_FILE} to BigCommerce store {STORE_HASH}...")
@@ -113,6 +148,7 @@ def activate_theme(theme_uuid):
         return False
 
 if __name__ == "__main__":
+    build_theme_zip()
     job_id = upload_theme()
     if job_id:
         theme_uuid = check_job_status(job_id)

@@ -444,6 +444,83 @@
         overflow: visible !important;
     }
 
+    // Fix mobile menu scrollability when header is open on phone
+    .header.is-open {
+        bottom: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        left: 0 !important;
+        max-height: 100dvh !important;
+        overflow: hidden !important;
+        padding-bottom: 0 !important;
+        position: fixed !important;
+        right: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        z-index: 100 !important;
+
+        > .container {
+            flex-shrink: 0 !important;
+        }
+
+        .navPages-wrap {
+            background: transparent !important;
+            display: flex !important;
+            flex: 1 1 auto !important;
+            flex-direction: column !important;
+            height: auto !important;
+            min-height: 0 !important;
+            overflow: hidden !important;
+
+            > .container {
+                display: flex !important;
+                flex: 1 1 auto !important;
+                flex-direction: column !important;
+                height: 100% !important;
+                min-height: 0 !important;
+                padding: 0 !important;
+                position: relative !important;
+            }
+        }
+
+        .navPages-container {
+            bottom: auto !important;
+            display: flex !important;
+            flex: 1 1 auto !important;
+            flex-direction: column !important;
+            height: 100% !important;
+            min-height: 0 !important;
+            overflow: hidden !important;
+            padding-top: 0 !important;
+            position: static !important;
+            top: auto !important;
+        }
+
+        .navPages {
+            flex: 1 1 auto !important;
+            height: 100% !important;
+            max-height: 100% !important;
+            min-height: 0 !important;
+            overflow-y: auto !important;
+            overscroll-behavior-y: contain !important;
+            padding-bottom: 60px !important;
+            touch-action: pan-y !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+    }
+
+    .has--epic-search .header.is-open .navPages-container.is-open {
+        padding-top: 0 !important;
+
+        .navPages {
+            height: 100% !important;
+            max-height: 100% !important;
+        }
+    }
+
     // Show sky background above banner, matching space below it
     .heroCarousel {
         margin-top: 60px !important;
@@ -530,14 +607,12 @@
 }
 
 // =============================================================================
-// Hide Hover Actions (Quick View / Choose Options) on specific sections
+// Hide Hover Actions (Quick View / Choose Options / Compare) on product cards & list items
 // =============================================================================
 
-[data-list-name="New Products"],
-[data-list-name="Most Popular Products"] {
-    .card-figcaption {
-        display: none !important;
-    }
+.card-figcaption,
+.listItem-figureBody {
+    display: none !important;
 }
 
 // =============================================================================

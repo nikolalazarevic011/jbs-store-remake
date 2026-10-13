@@ -155,8 +155,30 @@ def activate(store_hash, token, variation_hint):
                              json={'variation_id': chosen.get('uuid')})
     if response.status_code == 204:
         print("[+] Theme activated.")
+        return latest.get('uuid')
     else:
         sys.exit(f"ERROR: activation failed {response.status_code}: {response.text[:300]}")
+
+
+def delete_old_themes(store_hash, token, keep_theme_id=None):
+    print("[*] Checking for old themes to clean up ...")
+    url = API_BASE.format(store=store_hash) + '/themes'
+    headers = {'X-Auth-Token': token, 'Accept': 'application/json'}
+    themes = requests.get(url, headers=headers).json().get('data', [])
+    for theme in themes:
+        theme_id = theme.get('uuid')
+        theme_name = theme.get('name')
+        is_active = theme.get('is_active', False)
+        if theme_id == keep_theme_id or is_active or theme_name == 'Cornerstone':
+            print(f"    Preserving: {theme_name} ({theme_id}) [active={is_active}]")
+            continue
+        print(f"[*] Deleting old theme: {theme_name} ({theme_id}) ...")
+        del_url = f"{url}/{theme_id}"
+        del_res = requests.delete(del_url, headers=headers)
+        if del_res.status_code in (200, 204):
+            print(f"[+] Deleted: {theme_name} ({theme_id})")
+        else:
+            print(f"[-] Could not delete {theme_name} ({theme_id}): {del_res.status_code} {del_res.text[:200]}")
 
 
 def main():
@@ -168,6 +190,7 @@ def main():
     parser.add_argument('--variation', default=None, help="Substring to pick the variation to activate.")
     parser.add_argument('--store-hash', default=os.getenv('BIGCOMMERCE_STORE_HASH', DEFAULT_STORE_HASH))
     parser.add_argument('--skip-bundle', action='store_true', help="Upload an existing zip instead of bundling.")
+    parser.add_argument('--delete-old', action='store_true', help="Delete old inactive custom themes.")
     args = parser.parse_args()
 
     current, new, config = plan_version(args.bump)
@@ -183,6 +206,7 @@ def main():
     print(f"  Version:        {current} -> {new}  (bump={args.bump})")
     print(f"  Bundle zip:     {zip_path.name}")
     print(f"  Activate:       {args.activate}")
+    print(f"  Delete old:     {args.delete_old}")
     print(f"  Writes:         config.json, package.json" if args.bump != 'none' else "  Writes:         (none)")
 
     if args.dry_run:
@@ -203,8 +227,12 @@ def main():
     job_id = upload(zip_path, args.store_hash, token)
     wait_for_job(job_id, args.store_hash, token)
 
+    activated_id = None
     if args.activate:
-        activate(args.store_hash, token, args.variation)
+        activated_id = activate(args.store_hash, token, args.variation)
+
+    if args.delete_old:
+        delete_old_themes(args.store_hash, token, keep_theme_id=activated_id)
 
     print("\n[+] Deploy complete.")
 

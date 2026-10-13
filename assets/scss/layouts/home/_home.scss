@@ -862,6 +862,20 @@ body.page-type_default .body > .container {
     font-size: 0.75rem;
 }
 
+@media (max-width: 767px) {
+    .eh-format-tile:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+
+        &.eh-format-tile--ink {
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        &.eh-format-tile--white {
+            border-top: 1px solid var(--eh-gray-100);
+        }
+    }
+}
+
 @media (min-width: 768px) {
     .eh-format-grid {
         grid-template-columns: repeat(3, 1fr);
